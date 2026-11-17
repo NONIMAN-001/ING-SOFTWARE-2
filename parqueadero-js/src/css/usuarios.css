@@ -1,0 +1,355 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    background-color: #f4f7fc;
+    overflow: hidden;
+}
+
+.app-layout {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+/* --- Header Azul --- */
+.hero-header {
+    background-color: #001299;
+    color: white;
+    padding: 24px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.hero-left h2 {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.hero-left p {
+    font-size: 14px;
+    color: #cbd5e1;
+}
+
+.hero-right {
+    text-align: right;
+}
+
+.date-text {
+    font-size: 12px;
+    color: #cbd5e1;
+    margin-bottom: 4px;
+}
+
+.time-text {
+    font-size: 22px;
+    font-weight: 700;
+}
+
+/* --- Área de Trabajo Principal --- */
+.main-workspace {
+    flex: 1;
+    padding: 30px 40px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #001299;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 24px;
+    align-self: flex-start;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+/* --- Cuadrícula de Usuarios (2 Columnas Iguales) --- */
+.usuarios-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+/* --- Tarjetas Base --- */
+.form-card {
+    background-color: white;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+    display: flex;
+    flex-direction: column;
+}
+
+.form-card-header {
+    background-color: #f1f5f9;
+    color: #001299;
+    padding: 16px 24px;
+    font-size: 16px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-card-body {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.form-spacing {
+    gap: 20px;
+}
+
+.d-flex-col {
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- Controles de Input --- */
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.input-group label {
+    font-size: 13px;
+    color: #334155;
+    font-weight: 600;
+}
+
+.input-control {
+    padding: 12px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #1e293b;
+    background-color: white;
+    outline: none;
+    transition: all 0.2s;
+    width: 100%;
+}
+
+.input-control:focus {
+    border-color: #001299;
+    box-shadow: 0 0 0 3px rgba(0, 18, 153, 0.1);
+}
+
+/* --- Botones --- */
+.button-row {
+    display: flex;
+    gap: 12px;
+}
+
+.mt-auto {
+    margin-top: auto;
+    padding-top: 20px;
+}
+
+.flex-1 {
+    flex: 1;
+}
+
+.btn-primary {
+    background-color: #001299;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-primary:hover {
+    background-color: #000c66;
+}
+
+.btn-outline {
+    background-color: white;
+    color: #001299;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+}
+
+.btn-outline:hover {
+    border-color: #001299;
+    background-color: #f8fafc;
+}
+
+/* --- Estilos de la Tarjeta de Perfil --- */
+.profile-card {
+    padding-top: 10px; /* Un poco de aire extra arriba */
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.profile-avatar {
+    width: 64px;
+    height: 64px;
+    background-color: #eff6ff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-info h4 {
+    font-size: 18px;
+    color: #1e293b;
+    margin-bottom: 4px;
+}
+
+.profile-info span {
+    font-size: 13px;
+    color: #64748b;
+}
+
+.divider {
+    border: none;
+    border-top: 1px solid #e2e8f0;
+    margin: 24px 0;
+}
+
+/* --- Listas de Detalles --- */
+.detail-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.detail-label {
+    font-size: 14px;
+    color: #64748b;
+}
+
+.detail-value {
+    font-size: 14px;
+    color: #1e293b;
+    font-weight: 600;
+}
+
+/* --- Alerta Informativa y Texto de Ayuda --- */
+.alert-box {
+    background-color: #eff6ff;
+    padding: 14px 16px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.mt-4 {
+    margin-top: 24px;
+}
+
+.alert-box span {
+    font-size: 13px;
+    color: #64748b;
+    line-height: 1.4;
+}
+
+.helper-text {
+    font-size: 12px;
+    color: #94a3b8;
+    margin-top: 20px;
+}
+
+/* --- Footer --- */
+.app-footer {
+    background-color: white;
+    border-top: 1px solid #e2e8f0;
+    padding: 16px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: #64748b;
+}
+
+.footer-right {
+    display: flex;
+    align-items: center;
+}
+
+.logout-link {
+    color: #64748b;
+    text-decoration: none;
+    margin-left: 4px;
+}
+
+.logout-link:hover {
+    color: #001299;
+    text-decoration: underline;
+}
+
+/* --- Botón Recovery --- */
+.btn-recovery {
+    position: fixed; top: 15px; left: 15px; z-index: 999;
+    width: 36px; height: 36px; border-radius: 50%;
+    background-color: #001299; color: white; border: none;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    transition: background-color 0.2s, transform 0.2s;
+}
+.btn-recovery:hover { background-color: #000c66; transform: scale(1.05); }
+
+/* Modal Recovery */
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background-color: rgba(0,0,0,0.6); z-index: 1000;
+      display: none; /* 👇 Se cambia 'flex' por 'none' para que inicie oculta */
+      align-items: center; justify-content: center;
+    }
+    
+.modal-content {
+    background-color: white; padding: 24px; border-radius: 12px;
+    width: 320px; box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+.modal-content h3 { color: #001299; margin-bottom: 16px; text-align: center; }
+.modal-actions {
+    display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;
+}
+.btn-outline {
+    background: transparent; color: #64748b; border: 1px solid #cbd5e1;
+    border-radius: 8px; padding: 8px 16px; cursor: pointer;
+}
+.btn-outline:hover { background: #f1f5f9; }

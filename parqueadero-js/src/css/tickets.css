@@ -1,0 +1,296 @@
+/* ==========================================================================
+   DISEÑO DE TICKETS (REGISTRO Y COBRO) - PARKING LA PRIMERA
+   Réplica exacta del 'Comprobante de cobro' y 'Ticket de ingreso'
+   ========================================================================== */
+
+/* --- Modal Overlay --- */
+.ticket-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.ticket-modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* --- Tarjeta del Ticket (Modal Box) --- */
+.ticket-card {
+  background: #ffffff;
+  width: 100%;
+  max-width: 440px;
+  border-radius: 18px;
+  box-shadow: 0 25px 50px -12px rgba(0, 18, 153, 0.18), 0 10px 25px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e2e8f0;
+  padding: 32px 30px 28px 30px;
+  transform: translateY(16px) scale(0.96);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  max-height: 92vh;
+  overflow-y: auto;
+}
+
+.ticket-modal-overlay.active .ticket-card {
+  transform: translateY(0) scale(1);
+}
+
+/* --- Cabecera del Ticket --- */
+.ticket-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+.ticket-logo-box {
+  width: 48px;
+  height: 48px;
+  background-color: #001299;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 18, 153, 0.25);
+  margin-bottom: 12px;
+}
+
+.ticket-logo-p {
+  color: #ffffff;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 800;
+  font-size: 24px;
+  line-height: 1;
+  border: 2px solid #ffffff;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ticket-title {
+  color: #001299;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.ticket-subtitle {
+  color: #64748b;
+  font-size: 13.5px;
+  font-weight: 500;
+  margin-top: 4px;
+}
+
+/* --- Separadores --- */
+.ticket-divider {
+  border: none;
+  height: 1px;
+  background-color: #e2e8f0;
+  margin: 14px 0;
+}
+
+/* --- Filas de Información Clave-Valor --- */
+.ticket-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 0;
+}
+
+.ticket-label {
+  color: #64748b;
+  font-size: 13.5px;
+  font-weight: 500;
+}
+
+.ticket-value {
+  color: #0f172a;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: right;
+}
+
+/* --- Caja Destacada: Matrícula y Tipo de Vehículo --- */
+.ticket-highlight-box {
+  background-color: #eff4ff;
+  border-radius: 12px;
+  padding: 14px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 14px 0;
+  border: 1px solid #dbeafe;
+}
+
+.ticket-highlight-col-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.ticket-highlight-col-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.ticket-hl-label {
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+.ticket-hl-plate {
+  color: #001299;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  line-height: 1.1;
+}
+
+.ticket-hl-vehicle {
+  color: #001299;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  line-height: 1.1;
+}
+
+/* --- Fila Destacada de Cobro / Tarifa --- */
+.ticket-total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+}
+
+.ticket-total-label {
+  color: #001299;
+  font-size: 14.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.ticket-total-amount {
+  color: #001299;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+/* --- Mensaje de Pie --- */
+.ticket-footer-text {
+  text-align: center;
+  color: #64748b;
+  font-size: 13px;
+  font-weight: 400;
+  margin: 14px 0 20px 0;
+  line-height: 1.4;
+  white-space: pre-line;
+}
+
+/* --- Botones de Acción --- */
+.ticket-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.btn-ticket-print {
+  background-color: #001299;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 13px 20px;
+  font-size: 14.5px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background-color 0.18s ease, transform 0.1s ease;
+  box-shadow: 0 4px 12px rgba(0, 18, 153, 0.2);
+}
+
+.btn-ticket-print:hover {
+  background-color: #000c66;
+}
+
+.btn-ticket-print:active {
+  transform: translateY(1px);
+}
+
+.btn-ticket-close {
+  background-color: #ffffff;
+  color: #001299;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 13px 20px;
+  font-size: 14.5px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.18s ease;
+}
+
+.btn-ticket-close:hover {
+  background-color: #f8fafc;
+  border-color: #94a3b8;
+}
+
+/* ==========================================================================
+   ESTILOS PARA IMPRESIÓN TÉRMICA (58mm / 80mm)
+   ========================================================================== */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .printable-thermal-ticket, .printable-thermal-ticket * {
+    visibility: visible;
+  }
+  .printable-thermal-ticket {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 58mm;
+    margin: 0;
+    padding: 2mm 3mm;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 11px;
+    color: #000000;
+    background: #ffffff;
+  }
+  @page {
+    size: 58mm auto;
+    margin: 0;
+  }
+}

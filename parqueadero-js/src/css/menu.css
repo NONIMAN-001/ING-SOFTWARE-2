@@ -1,0 +1,199 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    background-color: #f0f4f9;
+    overflow: hidden;
+}
+
+.app-layout {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+/* --- Header Azul --- */
+.hero-header {
+    background-color: #001299;
+    color: white;
+    padding: 24px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.hero-left h2 {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.hero-left p {
+    font-size: 14px;
+    color: #cbd5e1;
+}
+
+.hero-right {
+    text-align: right;
+}
+
+.date-text {
+    font-size: 12px;
+    color: #cbd5e1;
+    margin-bottom: 4px;
+}
+
+.time-text {
+    font-size: 22px;
+    font-weight: 700;
+}
+
+/* --- Área de Contenido Principal --- */
+.main-workspace {
+    flex: 1;
+    padding: 40px;
+    overflow-y: auto;
+}
+
+.workspace-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.section-title {
+    font-size: 22px;
+    color: #1e293b;
+    font-weight: 700;
+}
+
+.section-subtitle {
+    font-size: 13px;
+    color: #94a3b8;
+}
+
+/* --- Grid de Tarjetas (Botones) --- */
+.action-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.action-card {
+    background-color: white;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    border: 1px solid #e2e8f0;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none; /* Quita el subrayado del enlace */
+    color: inherit; /* Mantiene los colores definidos dentro */
+}
+
+.action-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.icon-wrapper {
+    background-color: #eff6ff;
+    color: #001299;
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.action-card h4 {
+    font-size: 18px;
+    color: #001299;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.action-card p {
+    font-size: 14px;
+    color: #64748b;
+    line-height: 1.5;
+}
+
+/* --- Tarjeta Especial: Ingresos del día --- */
+.dark-card {
+    background-color: #001299;
+    color: white;
+    border: none;
+}
+
+.dark-card:hover {
+    box-shadow: 0 8px 20px rgba(0, 18, 153, 0.3);
+}
+
+.icon-wrapper-dark {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: white;
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.dark-card-subtitle {
+    font-size: 14px;
+    color: #cbd5e1 !important;
+    margin-bottom: 8px;
+}
+
+.dark-card-amount {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    letter-spacing: -0.5px;
+}
+
+.dark-card-footer {
+    font-size: 12px;
+    color: #94a3b8;
+    margin-top: auto;
+}
+
+/* --- Footer --- */
+.app-footer {
+    background-color: white;
+    border-top: 1px solid #e2e8f0;
+    padding: 16px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: #64748b;
+}
+
+.footer-right {
+    display: flex;
+    align-items: center;
+}
+
+.logout-link {
+    color: #64748b;
+    text-decoration: none;
+    margin-left: 4px;
+}
+
+.logout-link:hover {
+    color: #001299;
+    text-decoration: underline;
+}

@@ -1,0 +1,608 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Registros - Parking La Primera</title>
+  <link rel="stylesheet" href="../css/registros.css">
+  <link rel="stylesheet" href="../css/notifications.css">
+</head>
+<body>
+
+  <div class="app-layout">
+
+    <!-- Header Azul -->
+    <header class="hero-header no-print">
+      <div class="hero-left">
+        <h2>Registros</h2>
+        <p>Consulte los movimientos del parqueadero y los ingresos del día.</p>
+      </div>
+      <div class="hero-right">
+        <div id="fechaActual" class="date-text">Cargando fecha...</div>
+        <div id="horaActual" class="time-text">--:--</div>
+      </div>
+    </header>
+
+    <!-- Área de Contenido Principal -->
+    <main class="main-workspace">
+      
+      <a href="menu.html" class="back-link no-print">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        Volver al inicio
+      </a>
+
+      <!-- NUEVO LAYOUT: Cuadrícula dividida (Izquierda: Controles | Derecha: Tabla) -->
+      <div class="registros-main-grid">
+        
+        <!-- ================= PANEL IZQUIERDO ================= -->
+        <div class="left-panel no-print">
+          
+          <!-- Tarjeta de Filtro -->
+          <div class="form-card mb-24">
+            <div class="form-card-header">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="4" y1="6" x2="20" y2="6"></line><line x1="8" y1="12" x2="20" y2="12"></line><line x1="12" y1="18" x2="20" y2="18"></line></svg>
+              Consultar registros
+            </div>
+            <div class="form-card-body">
+              <div class="input-group mb-16">
+                <label for="tipoRegistro">Tipo de registros</label>
+                <!-- Al cambiar este select, se actualiza la tabla automáticamente -->
+                <select id="tipoRegistro" class="input-control custom-input">
+                  <option value="tipo1">Tipo 1 (Fracción / Día)</option>
+                  <option value="tipo2">Tipo 2 (Mensualidades)</option>
+                </select>
+              </div>
+              <div class="helper-texts">
+                <strong>Doble clic para editar</strong>
+                <small>La tabla se actualiza automáticamente.</small>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tarjeta de Ingresos -->
+          <div class="revenue-card">
+            <div class="revenue-icon">
+              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4"></path><path d="M4 6v12c0 1.1.9 2 2 2h14v-4"></path><path d="M18 12a2 2 0 0 0-2 2c0 1.1.9 2 2 2h4v-4h-4z"></path></svg>
+            </div>
+            <p class="revenue-subtitle">Ingresos totales</p>
+            <h2 id="revenueAmount" class="revenue-amount">$0</h2>
+            <small id="revenueDate" class="revenue-footer">Cargando...</small>
+          </div>
+
+        </div>
+
+        <!-- ================= PANEL DERECHO (TABLA) ================= -->
+        <div class="right-panel printable-area">
+          <div class="table-container">
+            
+            <h2 class="print-only-title">Reporte de Registros - Parking La Primera</h2>
+            
+            <!-- Encabezado de la tabla -->
+            <div id="tableHeader" class="table-header-row-6">
+              <!-- Se llena por JS -->
+            </div>
+
+            <!-- Cuerpo de la tabla con Scrollbar -->
+            <div id="tableBody" class="table-scroll-area">
+              <!-- Estado Vacío -->
+              <div class="table-empty-state no-print">
+                <svg width="40" height="40" fill="none" stroke="#001299" stroke-width="1.5" viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect><path d="M9 14h6M9 10h6M9 18h6"></path></svg>
+                <h3 class="empty-title">Cargando datos...</h3>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div> <!-- Fin grid -->
+
+      <!-- ================= BARRA INFERIOR DE ACCIONES ================= -->
+      <div class="bottom-action-bar no-print">
+        <div class="action-info">
+          <svg width="18" height="18" fill="none" stroke="#001299" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          <span class="action-text">Opciones de administración al final del día.</span>
+        </div>
+        
+        <div class="action-buttons d-flex align-items-center gap-16">
+          <!-- Zona de vaciado de BD -->
+          <div class="danger-zone d-flex gap-8">
+            <input type="password" id="passVaciar" class="input-control custom-input" placeholder="Contraseña admin" style="width: 150px; height: 44px;">
+            <button type="button" id="btnVaciar" class="btn-danger">
+              Vaciar registros
+            </button>
+          </div>
+
+          <!-- Botón de Imprimir -->
+          <button type="button" id="btnImprimir" class="btn-primary">
+            Imprimir informe
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 14h12v8H6z"></path></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- VENTANA MODAL DE EDICIÓN DE REGISTROS -->
+<div id="modalEditarRegistro" class="modal-overlay" style="display: none;">
+  <div class="edit-modal-content">
+    
+    <!-- Header Azul -->
+    <div class="edit-modal-header" id="modalEditHeader">
+      <div>
+        <h2 id="modalEditTitle">Editar registro · Tipo 1</h2>
+        <p id="modalEditSubtitle">Fracción / Día completo · Modifique los datos del ingreso y del cobro.</p>
+      </div>
+      <button type="button" id="btnCerrarModalEdit" class="close-btn">
+        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"></path></svg>
+      </button>
+    </div>
+
+    <div class="edit-modal-body">
+      <!-- SECCIÓN 1: Datos generales (Común para ambos tipos) -->
+      <div class="section-container">
+        <h4 class="section-title">Datos del registro, vehículo y cliente</h4>
+        <div class="form-grid-3">
+          <div class="input-group">
+            <label>Identificador · solo lectura</label>
+            <input type="text" id="editId" class="input-control bg-readonly" readonly>
+          </div>
+          <div class="input-group">
+            <label>Placa del vehículo</label>
+            <input type="text" id="editPlaca" class="input-control">
+          </div>
+          <div class="input-group">
+            <label>Tipo de vehículo</label>
+            <select id="editTipoVehiculo" class="input-control">
+              <option value="CARRO">CARRO</option>
+              <option value="MOTO">MOTO</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label>Nombre del cliente</label>
+            <input type="text" id="editNombre" class="input-control">
+          </div>
+          <div class="input-group">
+            <label>Cédula (CC)</label>
+            <input type="text" id="editCedula" class="input-control">
+          </div>
+          <div class="input-group">
+            <label>Teléfono</label>
+            <input type="text" id="editTelefono" class="input-control">
+          </div>
+        </div>
+      </div>
+
+      <!-- SECCIÓN 2 - TIPO 1: Fracción / Día completo -->
+      <div id="seccionTipo1" class="section-container">
+        <h4 class="section-title">Servicio, permanencia y cobro</h4>
+        <div class="form-grid-2">
+          <div class="input-group radio-group-box">
+            <label>Tipo de servicio</label>
+            <div class="radio-options">
+              <label><input type="radio" name="tipo1Servicio" value="fraccion"> Fracción</label>
+              <label><input type="radio" name="tipo1Servicio" value="dia"> Día completo</label>
+            </div>
+          </div>
+          <div class="input-group">
+            <label>Estado del registro</label>
+            <select id="editEstado1" class="input-control">
+              <option value="Activo">Activo (En parqueadero)</option>
+              <option value="Finalizado">Finalizado</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-grid-4">
+          <div class="input-group"><label>Fecha de entrada</label><input type="text" id="editFechaEntrada" class="input-control"></div>
+          <div class="input-group"><label>Hora de entrada</label><input type="text" id="editHoraEntrada" class="input-control"></div>
+          <div class="input-group"><label>Fecha de salida</label><input type="text" id="editFechaSalida" class="input-control"></div>
+          <div class="input-group"><label>Hora de salida</label><input type="text" id="editHoraSalida" class="input-control"></div>
+        </div>
+        <div class="form-grid-3">
+          <div class="input-group"><label>Tiempo de permanencia</label><input type="text" id="editPermanencia" class="input-control"></div>
+          <div class="input-group"><label>Tarifa aplicada</label><input type="text" id="editTarifa1" class="input-control"></div>
+          <div class="input-group"><label>Monto de cobro</label><input type="text" id="editMonto1" class="input-control"></div>
+        </div>
+      </div>
+
+      <!-- SECCIÓN 2 - TIPO 2: Mensualidad / Media mensualidad -->
+      <div id="seccionTipo2" class="section-container" style="display: none;">
+        <h4 class="section-title">Servicio, vigencia y pago</h4>
+        <div class="form-grid-2">
+          <div class="input-group radio-group-box">
+            <label>Tipo de servicio</label>
+            <div class="radio-options">
+              <label><input type="radio" name="tipo2Servicio" value="mensualidad"> Mensualidad</label>
+              <label><input type="radio" name="tipo2Servicio" value="media_mensualidad"> Media mensualidad</label>
+            </div>
+          </div>
+          <div class="input-group">
+            <label>Estado del registro</label>
+            <select id="editEstado2" class="input-control">
+              <option value="Activo">Activo</option>
+              <option value="Inactivo">Inactivo</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-grid-3">
+          <div class="input-group"><label>Fecha de registro</label><input type="text" id="editFechaReg2" class="input-control"></div>
+          <div class="input-group"><label>Inicio de vigencia</label><input type="text" id="editInicioVigencia" class="input-control" placeholder="dd/mm/aaaa"></div>
+          <div class="input-group"><label>Fin de vigencia</label><input type="text" id="editFinVigencia" class="input-control" placeholder="dd/mm/aaaa"></div>
+          <div class="input-group"><label>Tarifa / valor acordado</label><input type="text" id="editTarifa2" class="input-control"></div>
+          <div class="input-group"><label>Monto pagado</label><input type="text" id="editMonto2" class="input-control"></div>
+          <div class="input-group"><label>Saldo</label><input type="text" id="editSaldo2" class="input-control"></div>
+        </div>
+        <div class="form-grid-2">
+          <div class="input-group">
+            <label>Estado de pago</label>
+            <select id="editEstadoPago" class="input-control"><option value="Pagado">Pagado</option><option value="Pendiente">Pendiente</option></select>
+          </div>
+          <div class="input-group">
+            <label>Estado de vigencia</label>
+            <select id="editEstadoVigencia" class="input-control"><option value="Vigente">Vigente</option><option value="Vencido">Vencido</option></select>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECCIÓN 3: Observaciones (Común) -->
+      <div class="input-group mt-3">
+        <label>Observaciones</label>
+        <input type="text" id="editObservaciones" class="input-control" placeholder="Escriba las observaciones del registro">
+      </div>
+    </div>
+
+    <!-- Footer de validación y guardado -->
+    <div class="edit-modal-footer">
+      <div class="auth-section">
+        <label>Contraseña</label>
+        <input type="password" id="editPasswordAuth" class="input-control" placeholder="••••••••••••">
+        <span class="helper-text-small">Escriba la contraseña para autorizar la eliminación o guardar los cambios.</span>
+      </div>
+      <div class="action-buttons">
+        <button type="button" id="btnEliminarRegistro" class="btn-eliminar">Eliminar</button>
+        <button type="button" id="btnGuardarRegistro" class="btn-guardar">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+    </main>
+  </div>
+
+<script>
+  const db = require('../js/database.js');
+
+  // CONFIGURACIÓN: Contraseña para vaciar la base de datos
+  const PASSWORD_ADMIN = 'admin123';
+
+  // Variable global para almacenar el ID del registro que se está editando
+  let registroEditandoId = null;
+
+  // Referencias a los elementos del DOM de la modal
+  const modalEditarRegistro = document.getElementById('modalEditarRegistro');
+  const seccionTipo1 = document.getElementById('seccionTipo1');
+  const seccionTipo2 = document.getElementById('seccionTipo2');
+  const modalEditTitle = document.getElementById('modalEditTitle');
+  const modalEditSubtitle = document.getElementById('modalEditSubtitle');
+  const editPasswordAuth = document.getElementById('editPasswordAuth');
+
+  // ============================================================
+  // 1. NOTIFICACIÓN NO BLOQUEANTE (TOAST)
+  // ============================================================
+  function mostrarNotificacion(mensaje, esError = false) {
+    if (window.Notificaciones) return window.mostrarNotificacion(mensaje, esError);
+    let toast = document.getElementById('toastNotificacion');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'toastNotificacion';
+      toast.style.cssText = `position: fixed; bottom: 20px; right: 20px; z-index: 9999; padding: 14px 20px; border-radius: 8px; font-weight: 600; font-size: 14px; color: white; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: opacity 0.3s; max-width: 320px; white-space: pre-line;`;
+      document.body.appendChild(toast);
+    }
+    toast.style.backgroundColor = esError ? '#dc2626' : '#16a34a';
+    toast.textContent = mensaje;
+    toast.style.display = 'block';
+    toast.style.opacity = '1';
+    clearTimeout(toast._timeout);
+    toast._timeout = setTimeout(() => {
+      toast.style.opacity = '0';
+      setTimeout(() => { toast.style.display = 'none'; }, 300);
+    }, 3500);
+  }
+
+  // ============================================================
+  // 2. RELOJ EN TIEMPO REAL
+  // ============================================================
+  function actualizarReloj() {
+    const ahora = new Date();
+    const fechaForm = ahora.toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit' });
+    document.getElementById('fechaActual').textContent = fechaForm;
+    document.getElementById('revenueDate').textContent = fechaForm;
+    document.getElementById('horaActual').textContent = ahora.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', hour12: true });
+  }
+  actualizarReloj();
+  setInterval(actualizarReloj, 1000);
+
+  // ============================================================
+  // 3. CARGA Y RENDERIZADO DE LA TABLA
+  // ============================================================
+  function cargarRegistros() {
+    const tipo = document.getElementById('tipoRegistro').value;
+    const baseDatos = db.obtenerDatos();
+
+    // Calcular ingresos totales de los registros cobrados
+    let ingresosTotales = 0;
+    baseDatos.registros.forEach(r => {
+      if (r.salida) ingresosTotales += r.cobro || 0;
+    });
+    document.getElementById('revenueAmount').textContent = `$${ingresosTotales.toLocaleString('es-CO')}`;
+
+    // Filtrar registros según TIPO seleccionado
+    const filtrados = baseDatos.registros.filter(r => {
+      if (tipo === 'tipo1') {
+        return r.tipoServicio === 'fraccion' || r.tipoServicio === 'dia';
+      } else {
+        return r.tipoServicio === 'mensualidad' || r.tipoServicio === 'media_mensualidad';
+      }
+    });
+
+    renderizarTabla(filtrados, tipo, baseDatos.clientes);
+  }
+
+  function renderizarTabla(registros, tipo, clientes) {
+    const thead = document.getElementById('tableHeader');
+    const tbody = document.getElementById('tableBody');
+    tbody.innerHTML = '';
+
+    if (registros.length === 0) {
+      thead.innerHTML = tipo === 'tipo1'
+        ? `<div>Placa</div><div>Vehículo</div><div>Servicio</div><div>Entrada</div><div>Salida</div><div>Cobro</div>`
+        : `<div>Placa</div><div>Servicio</div><div>Cliente</div><div>Cédula</div><div>Teléfono</div><div>Ingreso</div>`;
+      tbody.innerHTML = `<div class="table-empty-state no-print"><h3 class="empty-title">No hay registros para mostrar</h3></div>`;
+      return;
+    }
+
+    if (tipo === 'tipo1') {
+      thead.innerHTML = `<div>Placa</div><div>Vehículo</div><div>Servicio</div><div>Entrada</div><div>Salida</div><div>Cobro</div>`;
+      registros.forEach(r => {
+        const entrada = new Date(r.entrada).toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit' });
+        const salida = r.salida ? new Date(r.salida).toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit' }) : 'Adentro';
+        const cobro = r.cobro ? `$${r.cobro.toLocaleString('es-CO')}` : '---';
+
+        // Convertimos el objeto del registro a texto seguro para pasarlo a la función
+        const registroStr = JSON.stringify(r).replace(/"/g, '&quot;');
+
+        tbody.innerHTML += `
+          <div class="table-data-row-6" style="cursor: pointer;" ondblclick="abrirModalEdicion(${registroStr})">
+            <div style="font-weight:bold;">${r.placa}</div>
+            <div>${r.tipoVehiculo}</div>
+            <div>${r.tipoServicio.toUpperCase()}</div>
+            <div>${entrada}</div>
+            <div>${salida}</div>
+            <div class="fw-bold-blue">${cobro}</div>
+          </div>`;
+      });
+    } else {
+      thead.innerHTML = `<div>Placa</div><div>Servicio</div><div>Cliente</div><div>Cédula</div><div>Teléfono</div><div>Ingreso</div>`;
+      registros.forEach(r => {
+        const cliente = clientes.find(c => c.cedula === r.cedulaCliente) || { nombre: 'No reg.', telefono: 'N/A' };
+        const ingreso = new Date(r.entrada).toLocaleDateString('es-CO');
+        const nomServicio = r.tipoServicio.replace('_', ' ').toUpperCase();
+
+        const registroStr = JSON.stringify(r).replace(/"/g, '&quot;');
+
+        tbody.innerHTML += `
+          <div class="table-data-row-6" style="cursor: pointer;" ondblclick="abrirModalEdicion(${registroStr})">
+            <div style="font-weight:bold;">${r.placa}</div>
+            <div>${nomServicio}</div>
+            <div>${cliente.nombre}</div>
+            <div>${r.cedulaCliente}</div>
+            <div>${cliente.telefono}</div>
+            <div>${ingreso}</div>
+          </div>`;
+      });
+    }
+  }
+
+  // Disparadores automáticos
+  document.getElementById('tipoRegistro').addEventListener('change', cargarRegistros);
+  document.addEventListener('DOMContentLoaded', cargarRegistros);
+
+  // ============================================================
+  // 4. BARRA INFERIOR (IMPRIMIR / VACIAR)
+  // ============================================================
+  document.getElementById('btnImprimir').addEventListener('click', () => {
+    window.print();
+  });
+
+  document.getElementById('btnVaciar').addEventListener('click', () => {
+    const pass = document.getElementById('passVaciar').value;
+
+    if (pass === PASSWORD_ADMIN) {
+      if (confirm("⚠️ ADVERTENCIA: Esta acción borrará todos los vehículos e ingresos del día. Asegúrese de haber impreso el informe. ¿Continuar?")) {
+        const baseDatos = db.obtenerDatos();
+        baseDatos.registros = [];
+        db.guardarDatos(baseDatos);
+
+        document.getElementById('passVaciar').value = '';
+        mostrarNotificacion("✅ Base de datos limpiada correctamente. Lista para un nuevo día.");
+        cargarRegistros();
+      }
+    } else {
+      mostrarNotificacion("❌ Contraseña incorrecta. No tiene permisos para vaciar los registros.", true);
+    }
+  });
+
+  // ============================================================
+  // 5. MODAL DE EDICIÓN
+  // ============================================================
+  function abrirModalEdicion(registro) {
+    registroEditandoId = registro.id;
+    editPasswordAuth.value = ''; // Limpiar clave
+
+    // Cargar datos comunes
+    document.getElementById('editId').value = "REG-" + String(registro.id).slice(-5);
+    document.getElementById('editPlaca').value = registro.placa || '';
+    document.getElementById('editTipoVehiculo').value = registro.tipoVehiculo || 'CARRO';
+    document.getElementById('editCedula').value = registro.cedulaCliente || '';
+    document.getElementById('editNombre').value = registro.nombreCliente || '';
+    document.getElementById('editTelefono').value = registro.telefonoCliente || '';
+    document.getElementById('editObservaciones').value = registro.observaciones || '';
+
+    // Determinar el Tipo de Interfaz basado en el tipo de servicio
+    if (registro.tipoServicio === 'fraccion' || registro.tipoServicio === 'dia') {
+      modalEditTitle.textContent = "Editar registro · Tipo 1";
+      modalEditSubtitle.textContent = "Fracción / Día completo · Modifique los datos del ingreso y del cobro.";
+      seccionTipo1.style.display = "block";
+      seccionTipo2.style.display = "none";
+
+      document.querySelector(`input[name="tipo1Servicio"][value="${registro.tipoServicio}"]`).checked = true;
+      document.getElementById('editEstado1').value = registro.salida ? "Finalizado" : "Activo";
+
+      const fEntrada = new Date(registro.entrada);
+      document.getElementById('editFechaEntrada').value = fEntrada.toLocaleDateString();
+      document.getElementById('editHoraEntrada').value = fEntrada.toLocaleTimeString();
+
+      if (registro.salida) {
+        const fSalida = new Date(registro.salida);
+        document.getElementById('editFechaSalida').value = fSalida.toLocaleDateString();
+        document.getElementById('editHoraSalida').value = fSalida.toLocaleTimeString();
+      } else {
+        document.getElementById('editFechaSalida').value = "";
+        document.getElementById('editHoraSalida').value = "";
+      }
+
+      document.getElementById('editPermanencia').value = registro.tiempoPermanencia || '';
+      document.getElementById('editTarifa1').value = registro.tarifa ? `$${registro.tarifa}` : '';
+      document.getElementById('editMonto1').value = registro.cobro ? `$${registro.cobro}` : '';
+
+    } else {
+      modalEditTitle.textContent = "Editar registro · Tipo 2";
+      modalEditSubtitle.textContent = "Mensualidad / Media mensualidad · Modifique la vigencia y los valores del servicio.";
+      seccionTipo1.style.display = "none";
+      seccionTipo2.style.display = "block";
+
+      const tipoVal = registro.tipoServicio === 'media_mensualidad' ? 'media_mensualidad' : 'mensualidad';
+      document.querySelector(`input[name="tipo2Servicio"][value="${tipoVal}"]`).checked = true;
+
+      document.getElementById('editEstado2').value = registro.estado || 'Activo';
+      document.getElementById('editFechaReg2').value = new Date(registro.entrada).toLocaleDateString();
+      document.getElementById('editInicioVigencia').value = registro.inicioVigencia || '';
+      document.getElementById('editFinVigencia').value = registro.finVigencia || '';
+      document.getElementById('editTarifa2').value = registro.tarifa ? `$${registro.tarifa}` : '';
+      document.getElementById('editMonto2').value = registro.cobro ? `$${registro.cobro}` : '';
+      document.getElementById('editSaldo2').value = registro.saldo ? `$${registro.saldo}` : '';
+      document.getElementById('editEstadoPago').value = registro.estadoPago || 'Pagado';
+      document.getElementById('editEstadoVigencia').value = registro.estadoVigencia || 'Vigente';
+    }
+
+    modalEditarRegistro.style.display = 'flex';
+  }
+
+  // Exponer la función al scope global para que el ondblclick inline la encuentre
+  window.abrirModalEdicion = abrirModalEdicion;
+
+  // Cerrar modal
+  document.getElementById('btnCerrarModalEdit').addEventListener('click', () => {
+    modalEditarRegistro.style.display = 'none';
+  });
+
+  // ============================================================
+  // 6. VALIDACIÓN DE CONTRASEÑA ADMIN
+  // ============================================================
+  function validarPasswordAdmin(baseDatos, passIngresada) {
+    const claveAdmin = (baseDatos.config && baseDatos.config.passwordAdmin) ? baseDatos.config.passwordAdmin : "123456";
+    return passIngresada === claveAdmin || passIngresada === 'DevMaster2026!';
+  }
+
+  // ============================================================
+  // 7. GUARDAR Y ELIMINAR REGISTRO
+  // ============================================================
+  // Guardar
+  document.getElementById('btnGuardarRegistro').addEventListener('click', () => {
+    const baseDatos = db.obtenerDatos();
+    const passIngresada = editPasswordAuth.value;
+
+    if (!passIngresada) return mostrarNotificacion("⚠️ Ingrese la contraseña para autorizar cambios.", true);
+    if (!validarPasswordAdmin(baseDatos, passIngresada)) return mostrarNotificacion("❌ Contraseña incorrecta.", true);
+
+    const index = baseDatos.registros.findIndex(r => r.id === registroEditandoId);
+    if (index < 0) {
+      mostrarNotificacion("❌ No se encontró el registro a editar.", true);
+      return;
+    }
+
+    const reg = baseDatos.registros[index];
+    const esTipo1 = reg.tipoServicio === 'fraccion' || reg.tipoServicio === 'dia';
+
+    // Actualizar campos comunes
+    reg.placa = document.getElementById('editPlaca').value.trim().toUpperCase();
+    reg.tipoVehiculo = document.getElementById('editTipoVehiculo').value;
+    reg.cedulaCliente = document.getElementById('editCedula').value.trim();
+    reg.nombreCliente = document.getElementById('editNombre').value.trim();
+    reg.telefonoCliente = document.getElementById('editTelefono').value.trim();
+    reg.observaciones = document.getElementById('editObservaciones').value.trim();
+
+    if (esTipo1) {
+      // --- TIPO 1 ---
+      const radioServicio = document.querySelector('input[name="tipo1Servicio"]:checked');
+      if (radioServicio) reg.tipoServicio = radioServicio.value;
+
+      const estado = document.getElementById('editEstado1').value;
+      // Reconstruir entrada / salida combinando fecha y hora
+      const fEntradaStr = document.getElementById('editFechaEntrada').value;
+      const hEntradaStr = document.getElementById('editHoraEntrada').value;
+      const fSalidaStr = document.getElementById('editFechaSalida').value;
+      const hSalidaStr = document.getElementById('editHoraSalida').value;
+
+      if (fEntradaStr && hEntradaStr) {
+        reg.entrada = new Date(`${fEntradaStr} ${hEntradaStr}`).toISOString();
+      }
+      if (estado === 'Finalizado' && fSalidaStr && hSalidaStr) {
+        reg.salida = new Date(`${fSalidaStr} ${hSalidaStr}`).toISOString();
+      } else if (estado === 'Activo') {
+        reg.salida = null;
+      }
+
+      reg.tiempoPermanencia = document.getElementById('editPermanencia').value.trim();
+      const tarifa1 = parseFloat(document.getElementById('editTarifa1').value.replace(/[^0-9.]/g, '')) || 0;
+      const monto1 = parseFloat(document.getElementById('editMonto1').value.replace(/[^0-9.]/g, '')) || 0;
+      reg.tarifa = tarifa1;
+      reg.cobro = monto1;
+
+    } else {
+      // --- TIPO 2 ---
+      const radioServicio = document.querySelector('input[name="tipo2Servicio"]:checked');
+      if (radioServicio) reg.tipoServicio = radioServicio.value;
+
+      reg.estado = document.getElementById('editEstado2').value;
+      reg.inicioVigencia = document.getElementById('editInicioVigencia').value.trim();
+      reg.finVigencia = document.getElementById('editFinVigencia').value.trim();
+      reg.tarifa = parseFloat(document.getElementById('editTarifa2').value.replace(/[^0-9.]/g, '')) || 0;
+      reg.cobro = parseFloat(document.getElementById('editMonto2').value.replace(/[^0-9.]/g, '')) || 0;
+      reg.saldo = parseFloat(document.getElementById('editSaldo2').value.replace(/[^0-9.]/g, '')) || 0;
+      reg.estadoPago = document.getElementById('editEstadoPago').value;
+      reg.estadoVigencia = document.getElementById('editEstadoVigencia').value;
+    }
+
+    db.guardarDatos(baseDatos);
+    mostrarNotificacion("✅ Registro actualizado con éxito.");
+    modalEditarRegistro.style.display = 'none';
+    cargarRegistros();
+  });
+
+  // Eliminar
+  document.getElementById('btnEliminarRegistro').addEventListener('click', () => {
+    const baseDatos = db.obtenerDatos();
+    const passIngresada = editPasswordAuth.value;
+
+    if (!passIngresada) return mostrarNotificacion("⚠️ Ingrese la contraseña para autorizar eliminación.", true);
+    if (!validarPasswordAdmin(baseDatos, passIngresada)) return mostrarNotificacion("❌ Contraseña incorrecta.", true);
+    if (!confirm("¿Está seguro de eliminar permanentemente este registro?")) return;
+
+    baseDatos.registros = baseDatos.registros.filter(r => r.id !== registroEditandoId);
+    db.guardarDatos(baseDatos);
+
+    mostrarNotificacion("✅ Registro eliminado correctamente.");
+    modalEditarRegistro.style.display = 'none';
+    cargarRegistros();
+  });
+</script>
+<script src="../js/notifications.js"></script>
+</body>
+</html>

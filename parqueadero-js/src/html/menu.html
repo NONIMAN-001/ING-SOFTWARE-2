@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Menú Principal - Parking La Primera</title>
+  <link rel="stylesheet" href="../css/menu.css">
+  <link rel="stylesheet" href="../css/notifications.css">
+  <link rel="stylesheet" href="../css/tickets.css">
+  <style>
+    .btn-printer-header {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: #ffffff;
+      padding: 5px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin-top: 6px;
+    }
+    .btn-printer-header:hover {
+      background: rgba(255, 255, 255, 0.22);
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+    .printer-status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background-color: #ef4444;
+      display: inline-block;
+    }
+    .printer-status-dot.active {
+      background-color: #22c55e;
+      box-shadow: 0 0 6px #22c55e;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-layout">
+
+    <!-- Header Azul -->
+    <header class="hero-header">
+      <div class="hero-left">
+        <h2>¡Bienvenido al Sistema!</h2>
+        <p>Seleccione una opción para comenzar su jornada.</p>
+      </div>
+      <div class="hero-right">
+        <div id="fechaActual" class="date-text">Cargando fecha...</div>
+        <div id="horaActual" class="time-text">--:--</div>
+        <button type="button" id="btnConfigurarImpresora" class="btn-printer-header" title="Configurar impresora de tickets">
+          <span id="dotImpresora" class="printer-status-dot"></span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+          <span id="txtEstadoImpresora">Impresora</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Área de Contenido Principal -->
+    <main class="main-workspace">
+      
+      <div class="workspace-header">
+        <h3 class="section-title">¿Qué desea hacer?</h3>
+        <span class="section-subtitle">Menú principal</span>
+      </div>
+
+      <!-- Cuadrícula de opciones transformadas en enlaces -->
+      <div class="action-grid">
+        
+        <a href="registrar.html" class="action-card">
+          <div class="icon-wrapper">
+            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 16H9m10 0h3v-3.15a1 1 0 0 0-.84-.99L16 11l-2.7-3.6a2 2 0 0 0-1.6-.8H8.3a2 2 0 0 0-1.6.8L4 11l-5.16.86a1 1 0 0 0-.84.99V16h3m14 0a2 2 0 1 1-4 0m4 0a2 2 0 1 0-4 0m-10 0a2 2 0 1 1-4 0m4 0a2 2 0 1 0-4 0"></path></svg>
+          </div>
+          <h4>Registrar vehículo</h4>
+          <p>Registre la entrada y emita el ticket de ingreso.</p>
+        </a>
+
+        <a href="cobrar.html" class="action-card">
+          <div class="icon-wrapper">
+             <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8m4-14v2m0 16v-2"></path></svg>
+          </div>
+          <h4>Cobrar cliente</h4>
+          <p>Consulte la placa y liquide el comprobante de cobro.</p>
+        </a>
+
+        <a href="tarifas.html" class="action-card">
+          <div class="icon-wrapper">
+            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 21v-7m0-4V3m8 18v-9m0-4V3m8 18v-5m0-4V3M1 14h6m2-6h6m2 8h6"></path></svg>
+          </div>
+          <h4>Tarifas</h4>
+          <p>Configure y actualice los valores de cobro modernos.</p>
+        </a>
+
+        <a href="registros.html" class="action-card">
+          <div class="icon-wrapper">
+            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+          </div>
+          <h4>Registros</h4>
+          <p>Consulte movimientos e ingresos del día.</p>
+        </a>
+
+        <a href="usuarios.html" class="action-card">
+          <div class="icon-wrapper">
+             <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          </div>
+          <h4>Usuarios</h4>
+          <p>Busque y gestione los usuarios del sistema.</p>
+        </a>
+
+        <a href="registros.html" class="action-card dark-card">
+          <div class="icon-wrapper-dark">
+             <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4"></path><path d="M4 6v12c0 1.1.9 2 2 2h14v-4"></path><path d="M18 12a2 2 0 0 0-2 2c0 1.1.9 2 2 2h4v-4h-4z"></path></svg>
+          </div>
+          <p class="dark-card-subtitle">Ingresos del día</p>
+          <h2 id="ingresosDiaAmount" class="dark-card-amount">$0</h2>
+          <small class="dark-card-footer">Consulte el detalle en Registros.</small>
+        </a>
+
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <div class="footer-left">Gestión de estacionamiento · La Primera</div>
+      <div class="footer-right">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="margin-right: 6px; vertical-align: middle;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        Usuario · <a href="index.html" class="logout-link">Cerrar sesión</a>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- SCRIPTS Y MÓDULOS -->
+  <script src="../js/notifications.js"></script>
+  <script src="../js/printer.js"></script>
+  <script>
+    const db = require('../js/database.js');
+
+    // 1. Reloj en tiempo real
+    function actualizarReloj() {
+      const ahora = new Date();
+      document.getElementById('fechaActual').textContent = ahora.toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit' });
+      document.getElementById('horaActual').textContent = ahora.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', hour12: true });
+    }
+    actualizarReloj();
+    setInterval(actualizarReloj, 1000);
+
+    // 2. Indicador de estado de la impresora
+    function actualizarEstadoImpresoraUI() {
+      const dot = document.getElementById('dotImpresora');
+      const txt = document.getElementById('txtEstadoImpresora');
+      if (window.PrinterService && window.PrinterService.estaConectada()) {
+        dot.classList.add('active');
+        txt.textContent = window.PrinterService.config.nombre || 'Impresora conectada';
+      } else {
+        dot.classList.remove('active');
+        txt.textContent = 'Impresora (Sin conectar)';
+      }
+    }
+    actualizarEstadoImpresoraUI();
+
+    document.getElementById('btnConfigurarImpresora').addEventListener('click', () => {
+      if (window.PrinterService) {
+        window.PrinterService.mostrarModalConfiguracion().then(() => {
+          actualizarEstadoImpresoraUI();
+        });
+      }
+    });
+
+    // 3. Cargar ingresos totales dinámicamente
+    function cargarIngresosTotales() {
+      try {
+        const baseDatos = db.obtenerDatos();
+        let total = 0;
+        if (baseDatos && baseDatos.registros) {
+          baseDatos.registros.forEach(r => {
+            if (r.salida) {
+              total += r.cobro || 0;
+            }
+          });
+        }
+        document.getElementById('ingresosDiaAmount').textContent = `$${total.toLocaleString('es-CO')}`;
+      } catch (err) {
+        console.error("Error al cargar los ingresos en el menú:", err);
+      }
+    }
+
+    cargarIngresosTotales();
+  </script>
+</body>
+</html>

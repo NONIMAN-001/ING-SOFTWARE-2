@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Inicio de Sesión - Parking La Primera</title>
+  <link rel="stylesheet" href="../css/index.css">
+  <link rel="stylesheet" href="../css/notifications.css">
+</head>
+<body>
+
+  <div class="app-layout">
+
+    <!-- Header Azul -->
+    <header class="hero-header">
+      <div class="hero-left">
+        <h2>SYSTEM PARKING LA PRIMERA</h2>
+        <p>Administración de estacionamiento</p>
+      </div>
+      <div class="hero-right">
+        <!-- Reloj y fecha dinámicos -->
+        <div id="fechaActual" class="date-text">Cargando fecha...</div>
+        <div id="horaActual" class="time-text">--:--</div>
+      </div>
+    </header>
+
+    <!-- Área de Contenido Principal -->
+    <main class="main-workspace">
+      
+      <!-- Cuadrícula Principal (Info a la izq, Login a la der) -->
+      <div class="login-grid">
+        
+        <!-- Columna 1: Maitei ha Marandu -->
+        <section class="welcome-section">
+          <div class="welcome-icon">P</div>
+          <h2 class="welcome-title">Bienvenido a su<br>espacio de trabajo.</h2>
+          <p class="welcome-description">
+            Registre vehículos, gestione los cobros y consulte la información de su parqueadero en un solo lugar.
+          </p>
+          <hr class="welcome-divider">
+          <p class="welcome-footer-note">
+            Ingrese con su usuario o utilice una cuenta de Google u Outlook.
+          </p>
+        </section>
+
+        <!-- Columna 2: Tarjeta de Login -->
+        <section class="login-section">
+          <div class="login-card">
+            <h3 class="card-title">Iniciar sesión</h3>
+            
+            <form id="loginForm">
+              <div class="form-group">
+                <label for="usuario">Usuario</label>
+                <input type="text" id="usuario" class="input-control custom-input-blue" placeholder="Ingrese su usuario" required>
+              </div>
+
+              <div class="form-group">
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" class="input-control custom-input-blue" placeholder="Ingrese su contraseña" required>
+              </div>
+
+              <button type="submit" class="btn-primary btn-submit">Ingresar</button>
+            </form>
+
+            <a href="crear-cuenta.html" class="register-link">¿Crear un nuevo usuario?</a>
+
+            <div class="social-divider">
+              <span>O ingresar desde</span>
+            </div>
+
+            <div class="social-buttons">
+              <button type="button" class="btn-social">
+                <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.29v3.14C3.26 21.3 7.31 24 12 24z"/><path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.59H1.29C.47 8.22 0 10.05 0 12s.47 3.78 1.29 5.41l3.99-3.14z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.7 1.29 6.59l3.99 3.14c.95-2.83 3.6-4.98 6.72-4.98z"/></svg>
+                Google
+              </button>
+              <button type="button" class="btn-social">
+                <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#0078D4" d="M1 1h10v10H1zm12 0h10v10H13zM1 13h10v10H1zm12 0h10v10H13z"/></svg>
+                Outlook
+              </button>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <div class="footer-left">Gestión de estacionamiento · La Primera</div>
+      <div class="footer-right">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="margin-right: 6px; vertical-align: middle;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+        Acceso al sistema
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- SCRIPTS Y MÓDULOS -->
+  <script src="../js/notifications.js"></script>
+  <script>
+    const db = require('../js/database.js');
+
+    // 1. Reloj en tiempo real
+    function actualizarReloj() {
+      const ahora = new Date();
+      document.getElementById('fechaActual').textContent = ahora.toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit' });
+      document.getElementById('horaActual').textContent = ahora.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', hour12: true });
+    }
+    actualizarReloj();
+    setInterval(actualizarReloj, 1000);
+
+    // 2. Validación de Login contra db.json con notificaciones modernas
+    document.getElementById('loginForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const usuarioInput = document.getElementById('usuario').value.trim();
+      const passwordInput = document.getElementById('password').value.trim();
+
+      const baseDatos = db.obtenerDatos();
+
+      if (!baseDatos.usuarios) {
+        baseDatos.usuarios = [];
+      }
+
+      const usuarioEncontrado = baseDatos.usuarios.find(
+        u => u.usuario.toLowerCase() === usuarioInput.toLowerCase() && u.password === passwordInput
+      );
+
+      if (usuarioEncontrado) {
+        mostrarNotificacion({
+          tipo: 'success',
+          titulo: 'Bienvenido al sistema',
+          mensaje: `Sesión iniciada con éxito como ${usuarioEncontrado.nombre || usuarioEncontrado.usuario}.`
+        });
+        setTimeout(() => {
+          window.location.href = 'menu.html';
+        }, 1200);
+      } else {
+        mostrarNotificacion({
+          tipo: 'auth',
+          titulo: 'Digitar contraseña',
+          mensaje: 'Usuario o contraseña incorrectos. Verifique sus credenciales.'
+        });
+      }
+    });
+  </script>
+</body>
+</html>

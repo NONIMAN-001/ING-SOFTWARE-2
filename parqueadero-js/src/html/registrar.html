@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Registrar vehículo - Parking La Primera</title>
+  <link rel="stylesheet" href="../css/registrar.css">
+  <link rel="stylesheet" href="../css/notifications.css">
+  <link rel="stylesheet" href="../css/tickets.css">
+  <style>
+    .btn-printer-header {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: #ffffff;
+      padding: 5px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin-top: 6px;
+    }
+    .btn-printer-header:hover {
+      background: rgba(255, 255, 255, 0.22);
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+    .printer-status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background-color: #ef4444;
+      display: inline-block;
+    }
+    .printer-status-dot.active {
+      background-color: #22c55e;
+      box-shadow: 0 0 6px #22c55e;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-layout">
+
+    <!-- Header Azul -->
+    <header class="hero-header">
+      <div class="hero-left">
+        <h2>Registrar vehículo</h2>
+        <p>Complete la información de ingreso y los datos personales del cliente.</p>
+      </div>
+      <div class="hero-right">
+        <div id="fechaActual" class="date-text">Cargando fecha...</div>
+        <div id="horaActual" class="time-text">--:--</div>
+        <button type="button" id="btnConfigurarImpresora" class="btn-printer-header" title="Configurar impresora de tickets">
+          <span id="dotImpresora" class="printer-status-dot"></span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+          <span id="txtEstadoImpresora">Impresora</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Área de Contenido Principal -->
+    <main class="main-workspace">
+
+      <a href="menu.html" class="back-link">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        Volver al inicio
+      </a>
+
+      <!-- Contenedor de Formularios -->
+      <div class="forms-grid">
+
+        <!-- Tarjeta 1: Información del vehículo -->
+        <div class="form-card">
+          <div class="form-card-header">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 16H9m10 0h3v-3.15a1 1 0 0 0-.84-.99L16 11l-2.7-3.6a2 2 0 0 0-1.6-.8H8.3a2 2 0 0 0-1.6.8L4 11l-5.16.86a1 1 0 0 0-.84.99V16h3m14 0a2 2 0 1 1-4 0m4 0a2 2 0 1 0-4 0m-10 0a2 2 0 1 1-4 0m4 0a2 2 0 1 0-4 0"></path></svg>
+            Información del vehículo
+          </div>
+          <div class="form-card-body">
+
+            <div class="input-group">
+              <label for="placa">Placa del vehículo</label>
+              <input type="text" id="placa" class="input-control custom-input" placeholder="Ej: THZ 871" style="text-transform: uppercase;">
+            </div>
+
+            <div class="form-row">
+              <div class="input-group">
+                <label for="tipoVehiculo">Tipo de vehículo</label>
+                <select id="tipoVehiculo" class="input-control custom-input">
+                  <option value="CARRO">CARRO</option>
+                  <option value="MOTO">MOTO</option>
+                </select>
+              </div>
+              <div class="input-group">
+                <label for="tipoServicio">Tipo de servicio</label>
+                <select id="tipoServicio" class="input-control custom-input">
+                  <option value="fraccion">COMÚN / FRACCIÓN</option>
+                  <option value="dia">DÍA</option>
+                  <option value="media_mensualidad">MEDIA MENSUALIDAD</option>
+                  <option value="mensualidad">MENSUALIDAD</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="alert-box">
+              <svg width="18" height="18" fill="none" stroke="#001299" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4M12 8h.01"></path></svg>
+              <span>Verifique la placa antes de registrar el ingreso del vehículo.</span>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Tarjeta 2: Datos personales -->
+        <div class="form-card">
+          <div class="form-card-header">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+            Datos personales
+          </div>
+          <div class="form-card-body">
+
+            <div class="input-group">
+              <label for="nombre">Nombre del cliente</label>
+              <input type="text" id="nombre" class="input-control custom-input" placeholder="Nombre completo">
+            </div>
+
+            <div class="form-row">
+              <div class="input-group">
+                <label for="cedula">Cédula (CC)</label>
+                <input type="text" id="cedula" class="input-control custom-input" placeholder="Número de documento">
+              </div>
+              <div class="input-group">
+                <label for="telefono">Teléfono</label>
+                <input type="text" id="telefono" class="input-control custom-input" placeholder="Número de contacto">
+              </div>
+            </div>
+
+            <div class="alert-box">
+              <svg width="18" height="18" fill="none" stroke="#001299" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4M12 8h.01"></path></svg>
+              <span>Los datos del cliente se incluirán en el comprobante del servicio.</span>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Barra de acción inferior -->
+      <div class="bottom-action-bar">
+        <span class="action-text">Revise la información antes de continuar. Al registrar se generará el ticket de ingreso.</span>
+        <button type="button" id="btnRegistrar" class="btn-primary">
+          Registrar vehículo
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <div class="footer-left">Gestión de estacionamiento · La Primera</div>
+      <div class="footer-right">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="margin-right: 6px; vertical-align: middle;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        Usuario · <a href="index.html" class="logout-link">Cerrar sesión</a>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- SCRIPTS Y MÓDULOS -->
+  <script src="../js/notifications.js"></script>
+  <script src="../js/tickets.js"></script>
+  <script src="../js/printer.js"></script>
+
+  <script>
+    const db = require('../js/database.js');
+
+    // 1. Reloj en tiempo real
+    function actualizarReloj() {
+      const ahora = new Date();
+      document.getElementById('fechaActual').textContent =
+        ahora.toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit' });
+      document.getElementById('horaActual').textContent =
+        ahora.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', hour12: true });
+    }
+    actualizarReloj();
+    setInterval(actualizarReloj, 1000);
+
+    // 2. Indicador de estado de la impresora
+    function actualizarEstadoImpresoraUI() {
+      const dot = document.getElementById('dotImpresora');
+      const txt = document.getElementById('txtEstadoImpresora');
+      if (window.PrinterService && window.PrinterService.estaConectada()) {
+        dot.classList.add('active');
+        txt.textContent = window.PrinterService.config.nombre || 'Impresora conectada';
+      } else {
+        dot.classList.remove('active');
+        txt.textContent = 'Impresora (Sin conectar)';
+      }
+    }
+    actualizarEstadoImpresoraUI();
+
+    document.getElementById('btnConfigurarImpresora').addEventListener('click', () => {
+      if (window.PrinterService) {
+        window.PrinterService.mostrarModalConfiguracion().then(() => {
+          actualizarEstadoImpresoraUI();
+        });
+      }
+    });
+
+    // 3. Registro de vehículo y emisión de ticket
+    document.getElementById('btnRegistrar').addEventListener('click', async () => {
+      const inputPlaca = document.getElementById('placa');
+      const placa = inputPlaca.value.trim().toUpperCase();
+      const tipoVehiculo = document.getElementById('tipoVehiculo').value;
+      const tipoServicio = document.getElementById('tipoServicio').value;
+
+      const nombre   = document.getElementById('nombre').value.trim();
+      const cedula   = document.getElementById('cedula').value.trim();
+      const telefono = document.getElementById('telefono').value.trim();
+
+      // Validación obligatoria
+      if (!placa) {
+        mostrarNotificacion({
+          tipo: 'warning',
+          titulo: 'Llenar parámetros',
+          mensaje: 'Complete los campos requeridos para continuar.'
+        });
+        inputPlaca.focus();
+        return;
+      }
+
+      if (typeof db === 'undefined' || typeof db.registrarEntrada !== 'function') {
+        mostrarNotificacion("❌ Error: no se pudo cargar la base de datos.", true);
+        return;
+      }
+
+      const datosCliente = (nombre || cedula || telefono)
+        ? { nombre, cedula, telefono }
+        : null;
+
+      const resultado = db.registrarEntrada(placa, tipoVehiculo, tipoServicio, datosCliente);
+
+      if (resultado.exito) {
+        // Notificación de confirmación de operación (Diseño Estados del Sistema)
+        mostrarNotificacion({
+          tipo: 'success',
+          titulo: 'Registro exitoso',
+          mensaje: 'El vehículo se registró correctamente.'
+        });
+
+        // Obtener texto descriptivo de la tarifa
+        let tarifaTexto = '$1.500 / 15m';
+        try {
+          const bd = db.obtenerDatos();
+          if (bd && bd.tarifas && bd.tarifas[tipoVehiculo]) {
+            const t = bd.tarifas[tipoVehiculo];
+            if (tipoServicio === 'fraccion' || tipoServicio === 'COMUN') {
+              tarifaTexto = `$${t.fraccion.toLocaleString('es-CO')} / 15m`;
+            } else if (tipoServicio === 'dia') {
+              tarifaTexto = `$${t.dia.toLocaleString('es-CO')} / Día`;
+            } else if (tipoServicio === 'media_mensualidad') {
+              tarifaTexto = `$${t.media_mensualidad.toLocaleString('es-CO')} / Quincena`;
+            } else if (tipoServicio === 'mensualidad') {
+              tarifaTexto = `$${t.mensualidad.toLocaleString('es-CO')} / Mes`;
+            }
+          }
+        } catch (e) {
+          console.warn("No se pudieron cargar tarifas exactas:", e);
+        }
+
+        const datosTicket = {
+          placa: placa,
+          tipoVehiculo: tipoVehiculo,
+          tipoServicio: tipoServicio,
+          entrada: new Date().toISOString(),
+          nombre: nombre,
+          cedula: cedula,
+          telefono: telefono,
+          tarifaTexto: tarifaTexto
+        };
+
+        // Orden de impresión directa:
+        // Si no hay impresora conectada, PrinterService disparará el mensaje:
+        // "Impresora no conectada: No hay impresora conectada para emitir el ticket físico."
+        if (window.PrinterService) {
+          await window.PrinterService.imprimirTicketIngreso(datosTicket);
+        }
+
+        // Mostrar el diseño visual del ticket de registro replicando el comprobante de cobro
+        if (window.TicketsUI) {
+          window.TicketsUI.mostrarTicketRegistro(datosTicket, (d) => {
+            if (window.PrinterService) window.PrinterService.imprimirTicketIngreso(d);
+          });
+        }
+
+        // Limpiar campos del formulario
+        inputPlaca.value = '';
+        document.getElementById('nombre').value = '';
+        document.getElementById('cedula').value = '';
+        document.getElementById('telefono').value = '';
+        inputPlaca.focus();
+
+      } else {
+        mostrarNotificacion({
+          tipo: 'error',
+          titulo: 'Atención requerida',
+          mensaje: resultado.mensaje
+        });
+      }
+    });
+  </script>
+</body>
+</html>

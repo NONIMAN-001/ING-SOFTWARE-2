@@ -1,0 +1,60 @@
+{
+    "usuarios": [
+        {
+            "usuario": "admin",
+            "password": "123",
+            "rol": "administrador"
+        },
+        {
+            "usuario": "Kevin",
+            "password": "12345",
+            "nombre": "Kevin Angarita",
+            "rol": "cajero"
+        }
+    ],
+    "clientes": [
+        {
+            "nombre": "kevin",
+            "cedula": "109273645",
+            "telefono": "3214200553"
+        }
+    ],
+    "registros": [
+        {
+            "id": "1793122691522",
+            "placa": "AC858LV",
+            "tipoVehiculo": "CARRO",
+            "tipoServicio": "fraccion",
+            "entrada": "2026-10-27T17:38:11.522Z",
+            "salida": null,
+            "tiempoPermanencia": null,
+            "cobro": 0,
+            "cedulaCliente": null
+        },
+        {
+            "id": "1793122699187",
+            "placa": "PQR330",
+            "tipoVehiculo": "CARRO",
+            "tipoServicio": "mensualidad",
+            "entrada": "2026-10-27T17:38:19.187Z",
+            "salida": null,
+            "tiempoPermanencia": null,
+            "cobro": 0,
+            "cedulaCliente": "109273645"
+        }
+    ],
+    "tarifas": {
+        "CARRO": {
+            "fraccion": 1500,
+            "dia": 15000,
+            "media_mensualidad": 80000,
+            "mensualidad": 150000
+        },
+        "MOTO": {
+            "fraccion": 1000,
+            "dia": 10000,
+            "media_mensualidad": 50000,
+            "mensualidad": 90000
+        }
+    }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "parqueadero-js",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron . --remote-debugging-port=9222"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "electron": "^30.0.0"
+  },
+  "dependencies": {
+    "chromedriver": "^124.0.4",
+    "selenium-webdriver": "^4.51.0"
+  }
+}

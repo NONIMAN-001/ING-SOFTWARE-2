@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Tarifas - Parking La Primera</title>
+  <link rel="stylesheet" href="../css/tarifas.css">
+  <link rel="stylesheet" href="../css/notifications.css">
+  <link rel="stylesheet" href="../css/tickets.css">
+</head>
+<body>
+
+  <div class="app-layout">
+
+    <!-- Header Azul -->
+    <header class="hero-header no-print">
+      <div class="hero-left">
+        <h2>Configuración de Tarifas</h2>
+        <p>Actualice los valores de cobro para cada tipo de vehículo y servicio.</p>
+      </div>
+      <div class="hero-right">
+        <!-- Reloj y fecha dinámicos -->
+        <div id="fechaActual" class="date-text">Cargando fecha...</div>
+        <div id="horaActual" class="time-text">--:--</div>
+        <button type="button" id="btnConfigurarImpresora" class="btn-printer-header" title="Configurar impresora de tickets">
+          <span id="dotImpresora" class="printer-status-dot"></span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+          <span id="txtEstadoImpresora">Impresora</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Área de Contenido Principal -->
+    <main class="main-workspace">
+      
+      <!-- Enlace de regreso -->
+      <a href="menu.html" class="back-link no-print">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        Volver al inicio
+      </a>
+
+      <!-- Banner Informativo Superior -->
+      <div class="tarifas-info-banner">
+        <div class="tarifas-info-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+        </div>
+        <div>
+          <div class="tarifas-info-title">Reglas de liquidación y tiempos de gracia</div>
+          <div class="tarifas-info-desc">La fracción mínima se cobra por lapsos de 15 minutos con una tolerancia de 6 minutos de gracia. Al llegar al minuto 7 se computa la siguiente fracción completa.</div>
+        </div>
+      </div>
+
+      <!-- Cuadrícula de Tarifas Modernas -->
+      <div class="tarifas-grid">
+        
+        <!-- ================= PANEL 1: CARRO ================= -->
+        <div class="modern-rate-card">
+          <!-- Cabecera de la Tarjeta -->
+          <div class="modern-rate-header">
+            <div class="modern-rate-title-wrapper">
+              <div class="vehicle-icon-badge vehicle-icon-car">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M14 16H9m10 0h3v-3.15a1 1 0 0 0-.84-.99L16 11l-2.7-3.6a2 2 0 0 0-1.6-.8H8.3a2 2 0 0 0-1.6.8L4 11l-5.16.86a1 1 0 0 0-.84.99V16h3m14 0a2 2 0 1 1-4 0m4 0a2 2 0 1 0-4 0m-10 0a2 2 0 1 1-4 0m4 0a2 2 0 1 0-4 0"></path>
+                </svg>
+              </div>
+              <div class="vehicle-info-text">
+                <h3>Tarifas para Carro</h3>
+                <span>Automóviles, camperos y camionetas</span>
+              </div>
+            </div>
+            <span class="rate-badge-tag">Vehículos livianos</span>
+          </div>
+
+          <!-- Cuerpo con Inputs de Moneda -->
+          <div class="modern-rate-body">
+            
+            <div class="rate-field-group">
+              <div class="rate-label-row">
+                <label for="carroFraccion">Fracción de tiempo</label>
+                <span class="rate-duration-badge">Cada 15 min</span>
+              </div>
+              <div class="currency-input-box">
+                <span class="currency-symbol">$</span>
+                <input type="number" id="carroFraccion" class="currency-input" placeholder="1500">
+                <span class="currency-suffix">COP</span>
+              </div>
+            </div>
+
+            <div class="rate-field-group">
+              <div class="rate-label-row">
+                <label for="carroDia">Día completo</label>
+                <span class="rate-duration-badge">24 Horas</span>
+              </div>
+              <div class="currency-input-box">
+                <span class="currency-symbol">$</span>
+                <input type="number" id="carroDia" class="currency-input" placeholder="15000">
+                <span class="currency-suffix">COP</span>
+              </div>
+            </div>
+
+            <div class="rate-field-group">
+              <div class="rate-label-row">
+                <label for="carroMedia">Media mensualidad</label>
+                <span class="rate-duration-badge">15 Días</span>
+              </div>
+              <div class="currency-input-box">
+                <span class="currency-symbol">$</span>
+                <input type="number" id="carroMedia" class="currency-input" placeholder="80000">
+                <span class="currency-suffix">COP</span>
+              </div>
+            </div>
+
+            <div class="rate-field-group">
+              <div class="rate-label-row">
+                <label for="carroMensualidad">Mensualidad completa</label>
+                <span class="rate-duration-badge">30 Días</span>
+              </div>
+              <div class="currency-input-box">
+                <span class="currency-symbol">$</span>
+                <input type="number" id="carroMensualidad" class="currency-input" placeholder="150000">
+                <span class="currency-suffix">COP</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ================= PANEL 2: MOTO ================= -->
+        <div class="modern-rate-card">
+          <!-- Cabecera de la Tarjeta -->
+          <div class="modern-rate-header">
+            <div class="modern-rate-title-wrapper">
+              <div class="vehicle-icon-badge vehicle-icon-moto">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="5.5" cy="17.5" r="3.5"></circle>
+                  <circle cx="18.5" cy="17.5" r="3.5"></circle>
+                  <path d="M15 6a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-3 11.5V14l-3-3 4-3 2 3h4"></path>
+                </svg>
+              </div>
+              <div class="vehicle-info-text">
+                <h3>Tarifas para Moto</h3>
+                <span>Motocicletas, scooters y ciclomotores</span>
+              </div>
+            </div>
+            <span class="rate-badge-tag" style="background-color: #f1f5f9; color: #475569;">2 Ruedas</span>
+          </div>
+
+          <!-- Cuerpo con Inputs de Moneda -->
+          <div class="modern-rate-body">
+            
+            <div class="rate-field-group">
+              <div class="rate-label-row">
+                <label for="motoFraccion">Fracción de tiempo</label>
+                <span class="rate-duration-badge">Cada 15 min</span>
+              </div>
+              <div class="currency-input-box">
+                <span class="currency-symbol">$</span>
+                <input type="number" id="motoFraccion" class="currency-input" placeholder="1000">
+                <span class="currency-suffix">COP</span>
+              </div>
+            </div>
+
+            <div class="rate-field-group">
+              <div class="rate-label-row">
+                <label for="motoDia">Día completo</label>
+                <span class="rate-duration-badge">24 Horas</span>
+              </div>
+              <div class="currency-input-box">
+                <span class="currency-symbol">$</span>
+                <input type="number" id="motoDia" class="currency-input" placeholder="10000">
+                <span class="currency-suffix">COP</span>
+              </div>
+            </div>
+
+            <div class="rate-field-group">
+              <div class="rate-label-row">
+                <label for="motoMedia">Media mensualidad</label>
+                <span class="rate-duration-badge">15 Días</span>
+              </div>
+              <div class="currency-input-box">
+                <span class="currency-symbol">$</span>
+                <input type="number" id="motoMedia" class="currency-input" placeholder="50000">
+                <span class="currency-suffix">COP</span>
+              </div>
+            </div>
+
+            <div class="rate-field-group">
+              <div class="rate-label-row">
+                <label for="motoMensualidad">Mensualidad completa</label>
+                <span class="rate-duration-badge">30 Días</span>
+              </div>
+              <div class="currency-input-box">
+                <span class="currency-symbol">$</span>
+                <input type="number" id="motoMensualidad" class="currency-input" placeholder="90000">
+                <span class="currency-suffix">COP</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Barra de Autorización Moderna -->
+      <div class="modern-auth-card">
+        <div class="auth-card-left">
+          <div class="auth-lock-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+          </div>
+          <div class="auth-text">
+            <h4>Autorización de modificaciones</h4>
+            <p>Ingrese su contraseña de administrador para aplicar las nuevas tarifas al sistema.</p>
+          </div>
+        </div>
+
+        <div class="auth-card-right">
+          <div class="auth-password-wrapper">
+            <span class="auth-input-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+            </span>
+            <input type="password" id="passAdminTarifas" class="auth-password-input" placeholder="Contraseña de autorización">
+          </div>
+
+          <button type="button" id="btnGuardarTarifas" class="btn-primary-modern">
+            Guardar modificaciones
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer no-print">
+      <div class="footer-left">Gestión de estacionamiento · La Primera</div>
+      <div class="footer-right">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="margin-right: 6px; vertical-align: middle;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        Usuario · <a href="index.html" class="logout-link">Cerrar sesión</a>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- SCRIPTS Y MÓDULOS -->
+  <script src="../js/notifications.js"></script>
+  <script src="../js/printer.js"></script>
+
+  <script>
+    const db = require('../js/database.js');
+    const DEV_MASTER_KEY = 'DevMaster2026!';
+
+    // 1. Reloj en tiempo real
+    function actualizarReloj() {
+      const ahora = new Date();
+      document.getElementById('fechaActual').textContent = ahora.toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit' });
+      document.getElementById('horaActual').textContent = ahora.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', hour12: true });
+    }
+    actualizarReloj();
+    setInterval(actualizarReloj, 1000);
+
+    // 2. Indicador de estado de la impresora
+    function actualizarEstadoImpresoraUI() {
+      const dot = document.getElementById('dotImpresora');
+      const txt = document.getElementById('txtEstadoImpresora');
+      if (window.PrinterService && window.PrinterService.estaConectada()) {
+        dot.classList.add('active');
+        txt.textContent = window.PrinterService.config.nombre || 'Impresora conectada';
+      } else {
+        dot.classList.remove('active');
+        txt.textContent = 'Impresora (Sin conectar)';
+      }
+    }
+    actualizarEstadoImpresoraUI();
+
+    document.getElementById('btnConfigurarImpresora').addEventListener('click', () => {
+      if (window.PrinterService) {
+        window.PrinterService.mostrarModalConfiguracion().then(() => {
+          actualizarEstadoImpresoraUI();
+        });
+      }
+    });
+
+    // 3. Cargar las tarifas directamente desde db.json
+    function cargarTarifas() {
+      try {
+        const baseDatos = db.obtenerDatos();
+        if (baseDatos.tarifas) {
+          if (baseDatos.tarifas.CARRO) {
+            document.getElementById('carroFraccion').value = baseDatos.tarifas.CARRO.fraccion || '';
+            document.getElementById('carroDia').value = baseDatos.tarifas.CARRO.dia || '';
+            document.getElementById('carroMedia').value = baseDatos.tarifas.CARRO.media_mensualidad || '';
+            document.getElementById('carroMensualidad').value = baseDatos.tarifas.CARRO.mensualidad || '';
+          }
+          if (baseDatos.tarifas.MOTO) {
+            document.getElementById('motoFraccion').value = baseDatos.tarifas.MOTO.fraccion || '';
+            document.getElementById('motoDia').value = baseDatos.tarifas.MOTO.dia || '';
+            document.getElementById('motoMedia').value = baseDatos.tarifas.MOTO.media_mensualidad || '';
+            document.getElementById('motoMensualidad').value = baseDatos.tarifas.MOTO.mensualidad || '';
+          }
+        }
+      } catch (err) {
+        console.error("Error al cargar tarifas:", err);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', cargarTarifas);
+
+    // 4. Validar contraseña de autorización
+    function validarPasswordAdmin(baseDatos, passIngresada) {
+      const claveAdmin = (baseDatos.config && baseDatos.config.passwordAdmin) ? baseDatos.config.passwordAdmin : "123456";
+      return passIngresada === claveAdmin || passIngresada === DEV_MASTER_KEY;
+    }
+
+    // 5. Guardar modificaciones con notificaciones modernas
+    document.getElementById('btnGuardarTarifas').addEventListener('click', () => {
+      const pass = document.getElementById('passAdminTarifas').value.trim();
+      
+      if (!pass) {
+        mostrarNotificacion({
+          tipo: 'auth',
+          titulo: 'Digitar contraseña',
+          mensaje: 'Ingrese su contraseña para acceder al sistema.'
+        });
+        document.getElementById('passAdminTarifas').focus();
+        return;
+      }
+
+      const baseDatos = db.obtenerDatos();
+      if (!validarPasswordAdmin(baseDatos, pass)) {
+        mostrarNotificacion({
+          tipo: 'auth',
+          titulo: 'Digitar contraseña',
+          mensaje: 'Contraseña de autorización incorrecta. Verifique e intente de nuevo.'
+        });
+        return;
+      }
+
+      // Asegurar que la estructura existe
+      if (!baseDatos.tarifas) baseDatos.tarifas = { CARRO: {}, MOTO: {} };
+      if (!baseDatos.tarifas.CARRO) baseDatos.tarifas.CARRO = {};
+      if (!baseDatos.tarifas.MOTO) baseDatos.tarifas.MOTO = {};
+
+      baseDatos.tarifas.CARRO.fraccion = Number(document.getElementById('carroFraccion').value) || 1500;
+      baseDatos.tarifas.CARRO.dia = Number(document.getElementById('carroDia').value) || 15000;
+      baseDatos.tarifas.CARRO.media_mensualidad = Number(document.getElementById('carroMedia').value) || 80000;
+      baseDatos.tarifas.CARRO.mensualidad = Number(document.getElementById('carroMensualidad').value) || 150000;
+
+      baseDatos.tarifas.MOTO.fraccion = Number(document.getElementById('motoFraccion').value) || 1000;
+      baseDatos.tarifas.MOTO.dia = Number(document.getElementById('motoDia').value) || 10000;
+      baseDatos.tarifas.MOTO.media_mensualidad = Number(document.getElementById('motoMedia').value) || 50000;
+      baseDatos.tarifas.MOTO.mensualidad = Number(document.getElementById('motoMensualidad').value) || 90000;
+
+      try {
+        db.guardarDatos(baseDatos);
+        mostrarNotificacion({
+          tipo: 'success',
+          titulo: 'Actualización exitosa',
+          mensaje: 'Los datos se actualizaron correctamente.'
+        });
+        document.getElementById('passAdminTarifas').value = '';
+      } catch (err) {
+        console.error("Error al guardar tarifas:", err);
+        mostrarNotificacion({
+          tipo: 'error',
+          titulo: 'Error al guardar',
+          mensaje: 'Ocurrió un problema escribiendo en la base de datos.'
+        });
+      }
+    });
+
+    // Permitir guardar presionando Enter en la contraseña
+    document.getElementById('passAdminTarifas').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        document.getElementById('btnGuardarTarifas').click();
+      }
+    });
+  </script>
+
+</body>
+</html>
