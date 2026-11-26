@@ -224,3 +224,162 @@ select.input-control { cursor: pointer; }
 .btn-eliminar { padding: 10px 24px; background: white; border: 1px solid #dc2626; color: #dc2626; border-radius: 6px; font-weight: 600; cursor: pointer; }
 .btn-guardar { padding: 10px 24px; background: #001299; border: none; color: white; border-radius: 6px; font-weight: 600; cursor: pointer; }
 .mt-3 { margin-top: 15px; }
+
+
+/* --- FILAS CON 7 COLUMNAS (MENSUALIDADES CON ESTADO) --- */
+.table-header-row-7 {
+    display: grid; grid-template-columns: 1fr 1.2fr 1.3fr 1.1fr 1.1fr 1.1fr 1.4fr; background-color: #f1f5f9;
+    padding: 16px 24px; font-size: 13px; font-weight: 700; color: #001299; border-bottom: 1px solid #e2e8f0;
+    flex-shrink: 0;
+}
+.table-data-row-7 {
+    display: grid; grid-template-columns: 1fr 1.2fr 1.3fr 1.1fr 1.1fr 1.1fr 1.4fr; padding: 14px 24px;
+    font-size: 13px; color: #1e293b; border-bottom: 1px solid #e2e8f0; align-items: center;
+    transition: background-color 0.2s;
+}
+.table-data-row-7:hover { background-color: #f8fafc; cursor: pointer; }
+
+/* Badges de estado de suscripción */
+.badge-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: 9999px;
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+    width: fit-content;
+}
+.badge-al-dia {
+    background-color: #dcfce7;
+    color: #15803d;
+    border: 1px solid #bbf7d0;
+}
+.badge-pendiente {
+    background-color: #fee2e2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+}
+.status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    display: inline-block;
+}
+.status-dot.dot-green { background-color: #22c55e; }
+.status-dot.dot-red { background-color: #ef4444; }
+
+/* Botón flotante H (Historial del Mes) */
+.btn-fab-h {
+    position: fixed;
+    bottom: 24px;
+    right: 28px;
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background: #001299;
+    color: #ffffff;
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 4px 16px rgba(0, 18, 153, 0.4);
+    font-size: 22px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 999;
+}
+.btn-fab-h:hover {
+    transform: scale(1.08) translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 18, 153, 0.5);
+    background: #000c66;
+}
+.btn-fab-h:active {
+    transform: scale(0.95);
+}
+
+/* Modal de autenticación para registros del mes */
+.auth-h-modal {
+    background: white;
+    border-radius: 14px;
+    width: 420px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+.auth-h-header {
+    background: #001299;
+    color: white;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+.auth-h-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 800;
+    flex-shrink: 0;
+}
+.auth-h-body {
+    padding: 24px;
+}
+.auth-h-footer {
+    background: #f8fafc;
+    border-top: 1px solid #e2e8f0;
+    padding: 16px 24px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+.btn-outline {
+    background: white;
+    color: #475569;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 0 16px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    height: 40px;
+    transition: all 0.2s;
+}
+.btn-outline:hover {
+    background: #f1f5f9;
+}
+
+
+/* Botón cuadrado H al lado del campo de contraseña */
+.btn-square-h {
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    background-color: #001299;
+    color: #ffffff;
+    border: 1px solid #000c66;
+    font-size: 18px;
+    font-weight: 800;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+.btn-square-h:hover {
+    background-color: #000c66;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(0, 18, 153, 0.25);
+}
+.btn-square-h:active {
+    transform: translateY(1px);
+}

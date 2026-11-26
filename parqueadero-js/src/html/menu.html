@@ -149,6 +149,16 @@
     actualizarReloj();
     setInterval(actualizarReloj, 1000);
 
+    // Control de bienvenida de usuario en el encabezado
+    const usuarioActivoStr = localStorage.getItem('usuarioActivo');
+    if (usuarioActivoStr) {
+      try {
+        const usuarioActivo = JSON.parse(usuarioActivoStr);
+        const bienvenidaEl = document.querySelector('.hero-left h2');
+        if (bienvenidaEl) bienvenidaEl.textContent = `¡Bienvenido, ${usuarioActivo.nombre || usuarioActivo.usuario}!`;
+      } catch (e) {}
+    }
+
     // 2. Indicador de estado de la impresora
     function actualizarEstadoImpresoraUI() {
       const dot = document.getElementById('dotImpresora');

@@ -1,60 +1,61 @@
 {
-    "usuarios": [
-        {
-            "usuario": "admin",
-            "password": "123",
-            "rol": "administrador"
-        },
-        {
-            "usuario": "Kevin",
-            "password": "12345",
-            "nombre": "Kevin Angarita",
-            "rol": "cajero"
-        }
-    ],
-    "clientes": [
-        {
-            "nombre": "kevin",
-            "cedula": "109273645",
-            "telefono": "3214200553"
-        }
-    ],
-    "registros": [
-        {
-            "id": "1793122691522",
-            "placa": "AC858LV",
-            "tipoVehiculo": "CARRO",
-            "tipoServicio": "fraccion",
-            "entrada": "2026-10-27T17:38:11.522Z",
-            "salida": null,
-            "tiempoPermanencia": null,
-            "cobro": 0,
-            "cedulaCliente": null
-        },
-        {
-            "id": "1793122699187",
-            "placa": "PQR330",
-            "tipoVehiculo": "CARRO",
-            "tipoServicio": "mensualidad",
-            "entrada": "2026-10-27T17:38:19.187Z",
-            "salida": null,
-            "tiempoPermanencia": null,
-            "cobro": 0,
-            "cedulaCliente": "109273645"
-        }
-    ],
-    "tarifas": {
-        "CARRO": {
-            "fraccion": 1500,
-            "dia": 15000,
-            "media_mensualidad": 80000,
-            "mensualidad": 150000
-        },
-        "MOTO": {
-            "fraccion": 1000,
-            "dia": 10000,
-            "media_mensualidad": 50000,
-            "mensualidad": 90000
-        }
+  "usuarios": [
+    {
+      "usuario": "admin",
+      "nombre": "Administrador General",
+      "telefono": "3001234567",
+      "password": "ADM12345$",
+      "clave": "d2f73c49328affb6611d93a84e2a3b66cc245da2e2cc57b3e922488b745f4ca2"
+    },
+    {
+      "usuario": "cajero",
+      "nombre": "Cajero de Turno",
+      "telefono": "3009876543",
+      "password": "123",
+      "clave": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3"
+    },
+    {
+      "usuario": "cajero_test",
+      "nombre": "Cajero de Pruebas",
+      "telefono": "3110001122",
+      "password": "Caj@2026test",
+      "clave": "d5b30750afab721bb4e1c45abbd503a65bf2200f28ee5cd94ca9de8742e074ea"
+    },
+    {
+      "usuario": "admin_test",
+      "nombre": "Administrador de Pruebas",
+      "telefono": "3223334455",
+      "password": "Adm@2026test",
+      "clave": "6b4922104ecde5693695c0ebc23c7a37924fa9f4a496530da87414c8dd93e1a9"
     }
+  ],
+  "clientes": [],
+  "registros": [],
+  "cierresDiarios": [],
+  "gananciasFinalesDia": [],
+  "gananciasDelMes": {
+    "mesActual": "2026-11",
+    "gananciasMensualidad": 0,
+    "gananciasPorRegistros": 0,
+    "gananciasTotales": 0,
+    "historialInformes": []
+  },
+  "tarifas": {
+    "CARRO": {
+      "fraccion": 3000,
+      "dia": 15000,
+      "media_mensualidad": 70000,
+      "mensualidad": 120000
+    },
+    "MOTO": {
+      "fraccion": 1500,
+      "dia": 8000,
+      "media_mensualidad": 35000,
+      "mensualidad": 60000
+    }
+  },
+  "config": {
+    "passwordAdmin": "ADM12345$",
+    "passwordProgramador": "1092530175kj$"
+  }
 }

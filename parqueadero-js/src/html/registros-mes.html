@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Registros del Mes - Parking La Primera</title>
+  <link rel="stylesheet" href="../css/registros.css">
+  <link rel="stylesheet" href="../css/registros-mes.css">
+  <link rel="stylesheet" href="../css/notifications.css">
+</head>
+<body>
+
+  <div class="app-layout">
+
+    <!-- Header Azul -->
+    <header class="hero-header no-print">
+      <div class="hero-left">
+        <h2>Registros del Mes (Histórico)</h2>
+        <p>Consolidado diario de afluencia vehicular y ganancias finales registradas.</p>
+      </div>
+      <div class="hero-right">
+        <div id="fechaActual" class="date-text">Cargando fecha...</div>
+        <div id="horaActual" class="time-text">--:--</div>
+      </div>
+    </header>
+
+    <!-- Área de Contenido Principal -->
+    <main class="main-workspace">
+      
+      <!-- Enlace de regreso a Registros -->
+      <a href="registros.html" class="back-link no-print">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        Volver a registros diarios
+      </a>
+
+      <!-- Barra de Filtros y Acciones -->
+      <div class="filter-bar-mes no-print">
+        <div class="filter-controls">
+          <label style="font-size: 13px; font-weight: 700; color: #001299; display: flex; align-items: center; gap: 6px;">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            Filtrar por período:
+          </label>
+          <select id="selectMes" class="select-mes">
+            <option value="todos">Todos los meses</option>
+            <option value="1">Enero</option>
+            <option value="2">Febrero</option>
+            <option value="3">Marzo</option>
+            <option value="4">Abril</option>
+            <option value="5">Mayo</option>
+            <option value="6">Junio</option>
+            <option value="7">Julio</option>
+            <option value="8">Agosto</option>
+            <option value="9">Septiembre</option>
+            <option value="10">Octubre</option>
+            <option value="11">Noviembre</option>
+            <option value="12">Diciembre</option>
+          </select>
+          <select id="selectAnio" class="select-mes">
+            <option value="2026">2026</option>
+            <option value="2025">2025</option>
+            <option value="2027">2027</option>
+          </select>
+        </div>
+
+        <div style="display: flex; gap: 10px; align-items: center;">
+          <!-- Botón para copiar la columna de ganancias totales de cada día -->
+          <button type="button" id="btnCopiarGanancias" class="btn-primary" style="height: 40px; font-size: 13px; background-color: #059669;" title="Copiar columna de ganancias totales de cada día al portapapeles">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            Copiar ganancias totales
+          </button>
+
+          <!-- Botón para imprimir reporte mensual -->
+          <button type="button" id="btnImprimirMes" class="btn-primary" style="height: 40px; font-size: 13px;">
+            Imprimir reporte mensual
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 14h12v8H6z"></path></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Tarjetas de Resumen KPI -->
+      <div class="mes-kpis-grid no-print">
+        
+        <div class="kpi-card kpi-card-blue">
+          <div class="kpi-icon">
+            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8m4-14v2m0 16v-2"></path></svg>
+          </div>
+          <div class="kpi-content">
+            <span class="kpi-label">Ganancia total del mes</span>
+            <span id="kpiGananciaTotal" class="kpi-value">$0</span>
+            <span class="kpi-sub">Total registrado en cierres de base de datos</span>
+          </div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-icon">
+            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 16H9m10 0h3v-3.15a1 1 0 0 0-.84-.99L16 11l-2.7-3.6a2 2 0 0 0-1.6-.8H8.3a2 2 0 0 0-1.6.8L4 11l-5.16.86a1 1 0 0 0-.84.99V16h3m14 0a2 2 0 1 1-4 0m4 0a2 2 0 1 0-4 0m-10 0a2 2 0 1 1-4 0m4 0a2 2 0 1 0-4 0"></path></svg>
+          </div>
+          <div class="kpi-content">
+            <span class="kpi-label">Vehículos registrados</span>
+            <span id="kpiTotalVehiculos" class="kpi-value" style="color: #1e293b;">0</span>
+            <span class="kpi-sub">Afluencia acumulada en el período</span>
+          </div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-icon">
+            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+          </div>
+          <div class="kpi-content">
+            <span class="kpi-label">Días con cierre registrado</span>
+            <span id="kpiDiasCerrados" class="kpi-value" style="color: #1e293b;">0</span>
+            <span class="kpi-sub">Jornadas limpiadas por administración</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Tabla Principal de Registros del Mes -->
+      <div class="table-container printable-area" style="flex: 1; min-height: 0;">
+        <h2 class="print-only-title">Informe Mensual de Ingresos y Vehículos - Parking La Primera</h2>
+        
+        <div class="table-header-mes">
+          <div>Día / Fecha de cierre</div>
+          <div>Vehículos registrados</div>
+          <div>Vehículos cobrados</div>
+          <div>Ganancia total registrada</div>
+        </div>
+
+        <div id="tableBodyMes" class="table-scroll-area">
+          <div class="table-empty-state no-print">
+            <svg width="40" height="40" fill="none" stroke="#001299" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            <h3 class="empty-title">Cargando registros del mes...</h3>
+          </div>
+        </div>
+      </div>
+
+      <!-- Barra de Eliminación y Administración del Histórico -->
+      <div class="bottom-action-bar no-print" style="margin-top: 18px; background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center;">
+        <div class="action-info" style="display: flex; align-items: center; gap: 8px;">
+          <svg width="18" height="18" fill="none" stroke="#dc2626" stroke-width="2" viewBox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+          <span style="font-size: 13px; font-weight: 600; color: #475569;">Eliminar registros de cierre:</span>
+        </div>
+
+        <div class="action-buttons d-flex align-items-center gap-12" style="display: flex; gap: 10px; align-items: center;">
+          <!-- Seleccionable para indicar si eliminar todos los meses o no -->
+          <select id="tipoEliminacionMes" class="select-mes" style="font-size: 13px; height: 42px;">
+            <option value="mes">Eliminar solo mes seleccionado</option>
+            <option value="todos">Eliminar todos los meses</option>
+          </select>
+
+          <!-- Campo para escribir la contraseña del admin -->
+          <input type="password" id="passAdminEliminarMes" class="input-control" placeholder="Contraseña admin" style="width: 160px; height: 42px; font-size: 13px;">
+
+          <!-- Botón para eliminar -->
+          <button type="button" id="btnEliminarHistorial" class="btn-danger" style="height: 42px; font-size: 13px; padding: 0 16px;">
+            Eliminar
+          </button>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer no-print">
+      <div class="footer-left">Gestión de estacionamiento · La Primera</div>
+      <div class="footer-right">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="margin-right: 6px; vertical-align: middle;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        Historial administrativo autorizado
+      </div>
+    </footer>
+
+  </div>
+
+  <script src="../js/notifications.js"></script>
+  <script>
+    const db = require('../js/database.js');
+
+    // 1. Reloj en tiempo real
+    function actualizarReloj() {
+      const ahora = new Date();
+      const fechaForm = ahora.toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit' });
+      document.getElementById('fechaActual').textContent = fechaForm;
+      document.getElementById('horaActual').textContent = ahora.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', hour12: true });
+    }
+    actualizarReloj();
+    setInterval(actualizarReloj, 1000);
+
+    // 2. Establecer mes y año actual en los selectores
+    const ahora = new Date();
+    document.getElementById('selectMes').value = String(ahora.getMonth() + 1);
+    document.getElementById('selectAnio').value = String(ahora.getFullYear());
+
+    // 3. Carga y renderizado del historial del mes
+    function cargarHistorialMes() {
+      const mesSeleccionado = document.getElementById('selectMes').value;
+      const anioSeleccionado = document.getElementById('selectAnio').value;
+      const baseDatos = db.obtenerDatos();
+
+      const cierres = baseDatos.cierresDiarios || baseDatos.gananciasFinalesDia || [];
+
+      // Filtrar según mes y año seleccionado
+      const filtrados = cierres.filter(c => {
+        const fecha = new Date(c.fecha || c.timestamp);
+        if (isNaN(fecha.getTime())) return true;
+        const matchMes = (mesSeleccionado === 'todos') ? true : (fecha.getMonth() + 1) === Number(mesSeleccionado);
+        const matchAnio = (fecha.getFullYear() === Number(anioSeleccionado));
+        return matchMes && matchAnio;
+      });
+
+      // Ordenar por fecha más reciente primero
+      filtrados.sort((a, b) => new Date(b.fecha || b.timestamp) - new Date(a.fecha || a.timestamp));
+
+      // Calcular KPIs
+      let gananciaTotal = 0;
+      let totalVehiculos = 0;
+
+      filtrados.forEach(c => {
+        gananciaTotal += (Number(c.gananciaTotal) || Number(c.gananciasFinales) || 0);
+        totalVehiculos += (Number(c.cantidadVehiculos) || 0);
+      });
+
+      document.getElementById('kpiGananciaTotal').textContent = `$${gananciaTotal.toLocaleString('es-CO')}`;
+      document.getElementById('kpiTotalVehiculos').textContent = `${totalVehiculos.toLocaleString('es-CO')} vehículos`;
+      document.getElementById('kpiDiasCerrados').textContent = `${filtrados.length} días`;
+
+      // Renderizar tabla
+      const tbody = document.getElementById('tableBodyMes');
+      tbody.innerHTML = '';
+
+      if (filtrados.length === 0) {
+        tbody.innerHTML = `
+          <div class="table-empty-state no-print">
+            <svg width="44" height="44" fill="none" stroke="#001299" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            <h3 class="empty-title">No hay registros de cierre para el período seleccionado</h3>
+            <p class="empty-subtitle">Cuando el administrador limpie el sistema al final del día ("Vaciar registros"), los datos de afluencia y ganancias finales quedarán registrados automáticamente aquí.</p>
+          </div>`;
+        return;
+      }
+
+      filtrados.forEach(c => {
+        const diaTexto = c.dia || (c.fecha ? new Date(c.fecha).toLocaleDateString('es-CO', { weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit' }) : 'Día cerrado');
+        const cantidadVehiculos = c.cantidadVehiculos || 0;
+        const vehiculosCobrados = c.vehiculosCobrados || cantidadVehiculos;
+        const ganancia = Number(c.gananciaTotal) || Number(c.gananciasFinales) || 0;
+
+        tbody.innerHTML += `
+          <div class="table-row-mes">
+            <div class="badge-dia">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              ${diaTexto}
+            </div>
+            <div style="font-weight: 600;">${cantidadVehiculos} vehículos</div>
+            <div>${vehiculosCobrados} cobrados</div>
+            <div class="col-ganancia">$${ganancia.toLocaleString('es-CO')}</div>
+          </div>`;
+      });
+    }
+
+    // 4. Copiar columna de ganancias totales de cada día
+    document.getElementById('btnCopiarGanancias').addEventListener('click', () => {
+      const mesSeleccionado = document.getElementById('selectMes').value;
+      const anioSeleccionado = document.getElementById('selectAnio').value;
+      const baseDatos = db.obtenerDatos();
+      const cierres = baseDatos.cierresDiarios || baseDatos.gananciasFinalesDia || [];
+
+      const filtrados = cierres.filter(c => {
+        const fecha = new Date(c.fecha || c.timestamp);
+        if (isNaN(fecha.getTime())) return true;
+        const matchMes = (mesSeleccionado === 'todos') ? true : (fecha.getMonth() + 1) === Number(mesSeleccionado);
+        const matchAnio = (fecha.getFullYear() === Number(anioSeleccionado));
+        return matchMes && matchAnio;
+      });
+
+      filtrados.sort((a, b) => new Date(a.fecha || a.timestamp) - new Date(b.fecha || b.timestamp));
+
+      if (filtrados.length === 0) {
+        mostrarNotificacion({
+          tipo: 'warning',
+          titulo: 'Sin datos para copiar',
+          mensaje: 'No hay registros en el período seleccionado para copiar.'
+        });
+        return;
+      }
+
+      let textoCopia = "Día / Fecha\tGanancia Total\n";
+      let totalSuma = 0;
+
+      filtrados.forEach(c => {
+        const dia = c.dia || c.fecha;
+        const valor = Number(c.gananciaTotal) || Number(c.gananciasFinales) || 0;
+        totalSuma += valor;
+        textoCopia += `${dia}\t$${valor.toLocaleString('es-CO')}\n`;
+      });
+
+      textoCopia += `TOTAL\t$${totalSuma.toLocaleString('es-CO')}`;
+
+      navigator.clipboard.writeText(textoCopia).then(() => {
+        mostrarNotificacion({
+          tipo: 'success',
+          titulo: 'Copiado al portapapeles',
+          mensaje: 'Columna de ganancias totales de cada día copiada exitosamente.'
+        });
+      }).catch(err => {
+        console.error("Error al copiar al portapapeles:", err);
+        mostrarNotificacion({
+          tipo: 'error',
+          titulo: 'Error al copiar',
+          mensaje: 'No se pudo copiar automáticamente al portapapeles.'
+        });
+      });
+    });
+
+    // 5. Eliminar registros del historial (mes seleccionado o todos)
+    document.getElementById('btnEliminarHistorial').addEventListener('click', () => {
+      const pass = document.getElementById('passAdminEliminarMes').value.trim();
+      const tipo = document.getElementById('tipoEliminacionMes').value;
+      const mes = document.getElementById('selectMes').value;
+      const anio = document.getElementById('selectAnio').value;
+
+      if (!pass) {
+        mostrarNotificacion({
+          tipo: 'warning',
+          titulo: 'Digitar contraseña',
+          mensaje: 'Debe ingresar la contraseña de administrador para autorizar la eliminación.'
+        });
+        document.getElementById('passAdminEliminarMes').focus();
+        return;
+      }
+
+      const mensajeConfirm = tipo === 'todos'
+        ? "⚠️ ADVERTENCIA: ¿Está seguro de eliminar TODOS los registros de todos los meses del historial? Esta acción no se puede deshacer."
+        : `⚠️ ADVERTENCIA: ¿Está seguro de eliminar los registros del mes ${mes}/${anio}?`;
+
+      if (confirm(mensajeConfirm)) {
+        const res = db.eliminarCierresHistorial(tipo, mes, anio, pass);
+        if (res.exito) {
+          document.getElementById('passAdminEliminarMes').value = '';
+          mostrarNotificacion({
+            tipo: 'success',
+            titulo: 'Eliminación exitosa',
+            mensaje: `Se eliminaron ${res.eliminados} registros de cierre del historial.`
+          });
+          cargarHistorialMes();
+        } else {
+          mostrarNotificacion({
+            tipo: 'error',
+            titulo: 'Error de autorización',
+            mensaje: res.mensaje || 'Contraseña de administrador incorrecta.'
+          });
+        }
+      }
+    });
+
+    // 6. Disparadores
+    document.getElementById('selectMes').addEventListener('change', cargarHistorialMes);
+    document.getElementById('selectAnio').addEventListener('change', cargarHistorialMes);
+    document.getElementById('btnImprimirMes').addEventListener('click', () => {
+      window.print();
+    });
+
+    document.addEventListener('DOMContentLoaded', cargarHistorialMes);
+  </script>
+</body>
+</html>

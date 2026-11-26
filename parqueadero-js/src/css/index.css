@@ -268,3 +268,41 @@ body {
     color: #001299;
     font-weight: 500;
 }
+
+
+/* --- Tarjeta de Configuración Inicial de Administrador (Primer Inicio) --- */
+.first-time-setup-card {
+    background: #ffffff;
+    border: 1px solid #93c5fd;
+    border-radius: 12px;
+    padding: 20px 24px;
+    box-shadow: 0 4px 16px rgba(0, 18, 153, 0.08);
+    margin-top: 14px;
+    animation: fadeInSetup 0.3s ease-in-out;
+}
+
+@keyframes fadeInSetup {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.setup-card-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #001299;
+    margin-bottom: 14px;
+}
+
+.setup-note {
+    font-size: 11px;
+    color: #64748b;
+    margin: 10px 0 14px 0;
+    line-height: 1.45;
+    background-color: #f8fafc;
+    border-left: 3px solid #001299;
+    padding: 6px 10px;
+    border-radius: 0 6px 6px 0;
+}

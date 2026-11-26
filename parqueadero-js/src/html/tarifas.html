@@ -267,6 +267,8 @@
     actualizarReloj();
     setInterval(actualizarReloj, 1000);
 
+// Sin restricción de roles: la modificación de tarifas está protegida por la contraseña de admin
+
     // 2. Indicador de estado de la impresora
     function actualizarEstadoImpresoraUI() {
       const dot = document.getElementById('dotImpresora');

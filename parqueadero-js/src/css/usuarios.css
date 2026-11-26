@@ -7,6 +7,7 @@
 body {
     font-family: 'Inter', 'Segoe UI', sans-serif;
     background-color: #f4f7fc;
+    color: #1e293b;
     overflow: hidden;
 }
 
@@ -20,16 +21,17 @@ body {
 .hero-header {
     background-color: #001299;
     color: white;
-    padding: 24px 40px;
+    padding: 22px 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    box-shadow: 0 2px 10px rgba(0, 18, 153, 0.15);
 }
 
 .hero-left h2 {
     font-size: 26px;
     font-weight: 700;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
 }
 
 .hero-left p {
@@ -55,10 +57,20 @@ body {
 /* --- Área de Trabajo Principal --- */
 .main-workspace {
     flex: 1;
-    padding: 30px 40px;
+    padding: 24px 40px;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
+}
+
+/* --- Barra Superior de Acciones --- */
+.toolbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    gap: 16px;
+    flex-wrap: wrap;
 }
 
 .back-link {
@@ -69,102 +81,47 @@ body {
     text-decoration: none;
     font-size: 14px;
     font-weight: 600;
-    margin-bottom: 24px;
-    align-self: flex-start;
+    transition: color 0.2s;
 }
 
 .back-link:hover {
+    color: #000c66;
     text-decoration: underline;
 }
 
-/* --- Cuadrícula de Usuarios (2 Columnas Iguales) --- */
-.usuarios-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-}
-
-/* --- Tarjetas Base --- */
-.form-card {
-    background-color: white;
-    border-radius: 12px;
-    border: 1px solid #e2e8f0;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
-    display: flex;
-    flex-direction: column;
-}
-
-.form-card-header {
-    background-color: #f1f5f9;
-    color: #001299;
-    padding: 16px 24px;
-    font-size: 16px;
-    font-weight: 700;
+.toolbar-actions {
     display: flex;
     align-items: center;
-    gap: 10px;
-}
-
-.form-card-body {
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-}
-
-.form-spacing {
-    gap: 20px;
-}
-
-.d-flex-col {
-    display: flex;
-    flex-direction: column;
-}
-
-/* --- Controles de Input --- */
-.input-group {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.input-group label {
-    font-size: 13px;
-    color: #334155;
-    font-weight: 600;
-}
-
-.input-control {
-    padding: 12px 14px;
-    border: 1px solid #cbd5e1;
-    border-radius: 8px;
-    font-size: 14px;
-    color: #1e293b;
-    background-color: white;
-    outline: none;
-    transition: all 0.2s;
-    width: 100%;
-}
-
-.input-control:focus {
-    border-color: #001299;
-    box-shadow: 0 0 0 3px rgba(0, 18, 153, 0.1);
-}
-
-/* --- Botones --- */
-.button-row {
-    display: flex;
     gap: 12px;
 }
 
-.mt-auto {
-    margin-top: auto;
-    padding-top: 20px;
+.search-input-wrapper {
+    position: relative;
+    width: 260px;
 }
 
-.flex-1 {
-    flex: 1;
+.search-input-wrapper svg {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+}
+
+.search-input {
+    width: 100%;
+    padding: 10px 14px 10px 38px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 13px;
+    background-color: white;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.search-input:focus {
+    border-color: #001299;
+    box-shadow: 0 0 0 3px rgba(0, 18, 153, 0.1);
 }
 
 .btn-primary {
@@ -172,132 +129,375 @@ body {
     color: white;
     border: none;
     border-radius: 8px;
-    padding: 12px 16px;
+    padding: 10px 18px;
     font-size: 14px;
     font-weight: 600;
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
     gap: 8px;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: background-color 0.2s, transform 0.1s;
 }
 
 .btn-primary:hover {
     background-color: #000c66;
 }
 
-.btn-outline {
-    background-color: white;
-    color: #001299;
-    border: 1px solid #cbd5e1;
-    border-radius: 8px;
-    padding: 12px 16px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-align: center;
+.btn-primary:active {
+    transform: scale(0.98);
 }
 
-.btn-outline:hover {
-    border-color: #001299;
-    background-color: #f8fafc;
+/* --- Cuadrícula de Tarjetas de Usuarios --- */
+.user-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+    width: 100%;
 }
 
-/* --- Estilos de la Tarjeta de Perfil --- */
-.profile-card {
-    padding-top: 10px; /* Un poco de aire extra arriba */
-}
-
-.profile-header {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-}
-
-.profile-avatar {
-    width: 64px;
-    height: 64px;
-    background-color: #eff6ff;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.profile-info h4 {
-    font-size: 18px;
-    color: #1e293b;
-    margin-bottom: 4px;
-}
-
-.profile-info span {
-    font-size: 13px;
-    color: #64748b;
-}
-
-.divider {
-    border: none;
-    border-top: 1px solid #e2e8f0;
-    margin: 24px 0;
-}
-
-/* --- Listas de Detalles --- */
-.detail-list {
+/* --- Tarjeta Individual de Usuario --- */
+.user-card {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 20px 22px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    min-height: 200px;
+    position: relative;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
-.detail-row {
+.user-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 18, 153, 0.08);
+    border-color: #93c5fd;
+}
+
+.user-card-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
+    margin-bottom: 14px;
 }
 
-.detail-label {
-    font-size: 14px;
-    color: #64748b;
-}
-
-.detail-value {
-    font-size: 14px;
-    color: #1e293b;
-    font-weight: 600;
-}
-
-/* --- Alerta Informativa y Texto de Ayuda --- */
-.alert-box {
-    background-color: #eff6ff;
-    padding: 14px 16px;
-    border-radius: 8px;
+.user-avatar-badge {
     display: flex;
     align-items: center;
     gap: 12px;
 }
 
-.mt-4 {
-    margin-top: 24px;
+.user-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #001299 0%, #2563eb 100%);
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(0, 18, 153, 0.2);
 }
 
-.alert-box span {
+.user-name-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1.25;
+}
+
+.user-status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background-color: #ecfdf5;
+    color: #059669;
+    border: 1px solid #a7f3d0;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 12px;
+}
+
+.user-status-pill::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #10b981;
+}
+
+.user-card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
     font-size: 13px;
-    color: #64748b;
-    line-height: 1.4;
+    color: #475569;
+    margin-bottom: 18px;
+    flex: 1;
 }
 
-.helper-text {
-    font-size: 12px;
+.user-detail-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.user-detail-row svg {
+    color: #64748b;
+    flex-shrink: 0;
+}
+
+.user-detail-label {
+    font-weight: 600;
+    color: #334155;
+    min-width: 60px;
+}
+
+.user-detail-val {
+    color: #0f172a;
+    word-break: break-all;
+}
+
+/* --- Esquina inferior derecha: Botón azul para editar --- */
+.user-card-footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: auto;
+    padding-top: 10px;
+    border-top: 1px dashed #f1f5f9;
+}
+
+.btn-edit-user {
+    background-color: #001299;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 18, 153, 0.15);
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn-edit-user:hover {
+    background-color: #000c66;
+    transform: translateY(-1px);
+}
+
+.btn-edit-user:active {
+    transform: scale(0.97);
+}
+
+/* --- Estado vacío --- */
+.empty-state {
+    grid-column: 1 / -1;
+    background: white;
+    border: 2px dashed #cbd5e1;
+    border-radius: 14px;
+    padding: 60px 20px;
+    text-align: center;
+    color: #64748b;
+}
+
+.empty-state svg {
+    margin-bottom: 12px;
     color: #94a3b8;
-    margin-top: 20px;
+}
+
+.empty-state h3 {
+    font-size: 18px;
+    color: #334155;
+    margin-bottom: 6px;
+}
+
+.empty-state p {
+    font-size: 14px;
+    margin-bottom: 16px;
+}
+
+/* --- Modales --- */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(2px);
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal-content-card {
+    background: white;
+    border-radius: 14px;
+    width: 100%;
+    max-width: 440px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    animation: modalPop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes modalPop {
+    from { opacity: 0; transform: scale(0.96) translateY(8px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.modal-header-bar {
+    background-color: #f8fafc;
+    border-bottom: 1px solid #e2e8f0;
+    padding: 16px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header-bar h3 {
+    font-size: 16px;
+    color: #001299;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-close-modal {
+    background: none;
+    border: none;
+    font-size: 20px;
+    line-height: 1;
+    color: #94a3b8;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.btn-close-modal:hover {
+    color: #334155;
+}
+
+.modal-body-form {
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-group label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #334155;
+}
+
+.input-control {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.input-control:focus {
+    border-color: #001299;
+    box-shadow: 0 0 0 3px rgba(0, 18, 153, 0.1);
+}
+
+/* Caja de contraseña administrativa resaltada */
+.admin-auth-box {
+    background-color: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 10px;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 4px;
+}
+
+.admin-auth-box label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #001299;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.input-admin-auth {
+    border-color: #93c5fd;
+    background-color: white;
+}
+
+.input-admin-auth:focus {
+    border-color: #001299;
+    box-shadow: 0 0 0 3px rgba(0, 18, 153, 0.15);
+}
+
+.modal-footer-bar {
+    background-color: #f8fafc;
+    border-top: 1px solid #e2e8f0;
+    padding: 14px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-outline {
+    background: white;
+    color: #475569;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-outline:hover {
+    background: #f1f5f9;
+    color: #1e293b;
+}
+
+.btn-danger-outline {
+    background: white;
+    color: #dc2626;
+    border: 1px solid #fca5a5;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-danger-outline:hover {
+    background-color: #fef2f2;
+    border-color: #dc2626;
 }
 
 /* --- Footer --- */
 .app-footer {
     background-color: white;
     border-top: 1px solid #e2e8f0;
-    padding: 16px 40px;
+    padding: 14px 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -308,48 +508,7 @@ body {
 .footer-right {
     display: flex;
     align-items: center;
-}
-
-.logout-link {
-    color: #64748b;
-    text-decoration: none;
-    margin-left: 4px;
-}
-
-.logout-link:hover {
+    gap: 6px;
     color: #001299;
-    text-decoration: underline;
+    font-weight: 500;
 }
-
-/* --- Botón Recovery --- */
-.btn-recovery {
-    position: fixed; top: 15px; left: 15px; z-index: 999;
-    width: 36px; height: 36px; border-radius: 50%;
-    background-color: #001299; color: white; border: none;
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-    transition: background-color 0.2s, transform 0.2s;
-}
-.btn-recovery:hover { background-color: #000c66; transform: scale(1.05); }
-
-/* Modal Recovery */
-    .modal-overlay {
-      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-      background-color: rgba(0,0,0,0.6); z-index: 1000;
-      display: none; /* 👇 Se cambia 'flex' por 'none' para que inicie oculta */
-      align-items: center; justify-content: center;
-    }
-    
-.modal-content {
-    background-color: white; padding: 24px; border-radius: 12px;
-    width: 320px; box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-}
-.modal-content h3 { color: #001299; margin-bottom: 16px; text-align: center; }
-.modal-actions {
-    display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;
-}
-.btn-outline {
-    background: transparent; color: #64748b; border: 1px solid #cbd5e1;
-    border-radius: 8px; padding: 8px 16px; cursor: pointer;
-}
-.btn-outline:hover { background: #f1f5f9; }

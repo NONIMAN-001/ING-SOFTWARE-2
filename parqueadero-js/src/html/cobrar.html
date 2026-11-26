@@ -162,7 +162,12 @@
           <svg width="18" height="18" fill="none" stroke="#001299" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
           <span class="action-text">Al cobrar se genera el comprobante del servicio y se libera el cupo.</span>
         </div>
-        <div class="action-buttons">
+        <div class="action-buttons" style="display: flex; align-items: center; gap: 14px;">
+          <!-- Opción para indicar si imprimir o no el ticket -->
+          <label class="print-ticket-option" title="Marque para emitir el ticket de cobro" style="display: inline-flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; font-size: 13.5px; font-weight: 600; color: #1e293b; background: #ffffff; padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+            <input type="checkbox" id="chkImprimirTicket" checked style="width: 17px; height: 17px; accent-color: #001299; cursor: pointer;">
+            <span>Imprimir ticket</span>
+          </label>
           <button type="button" id="btnLimpiar" class="btn-outline">Limpiar</button>
           <button type="button" id="btnCobrar" class="btn-primary" disabled style="opacity: 0.5; cursor: not-allowed;">
             Cobrar
@@ -344,44 +349,49 @@
       const resultado = db.registrarSalida(placaConsultada);
 
       if (resultado.exito) {
-        // Notificación de cobro exitoso (Diseño Estados del Sistema)
+        const deseaImprimir = document.getElementById('chkImprimirTicket').checked;
+
+        // Notificación de cobro exitoso
         mostrarNotificacion({
           tipo: 'success',
           titulo: 'Cobro exitoso',
-          mensaje: 'El cobro se realizó. El comprobante está listo.'
+          mensaje: deseaImprimir 
+            ? 'El cobro se realizó. El comprobante está listo.' 
+            : `Cobro de $${(resultado.datosCobro.cobro || 0).toLocaleString('es-CO')} procesado. Cupo liberado (sin imprimir ticket).`
         });
 
-        // Obtener datos del cliente si existen
-        const baseDatos = db.obtenerDatos();
-        let clienteData = null;
-        if (resultado.datosCobro && resultado.datosCobro.cedulaCliente) {
-          clienteData = baseDatos.clientes.find(c => c.cedula === resultado.datosCobro.cedulaCliente);
-        }
+        // Solo emitir o mostrar ticket si el usuario dejó marcado el campo
+        if (deseaImprimir) {
+          // Obtener datos del cliente si existen
+          const baseDatos = db.obtenerDatos();
+          let clienteData = null;
+          if (resultado.datosCobro && resultado.datosCobro.cedulaCliente) {
+            clienteData = baseDatos.clientes.find(c => c.cedula === resultado.datosCobro.cedulaCliente);
+          }
 
-        const datosTicket = {
-          placa: placaConsultada,
-          tipoVehiculo: resultado.datosCobro.tipoVehiculo,
-          tipoServicio: resultado.datosCobro.tipoServicio,
-          entrada: resultado.datosCobro.entrada,
-          salida: resultado.datosCobro.salida,
-          cobro: resultado.datosCobro.cobro,
-          nombre: clienteData ? clienteData.nombre : document.getElementById('nombreVal').textContent,
-          cedula: clienteData ? clienteData.cedula : document.getElementById('cedulaVal').textContent,
-          telefono: clienteData ? clienteData.telefono : document.getElementById('telefonoVal').textContent
-        };
+          const datosTicket = {
+            placa: placaConsultada,
+            tipoVehiculo: resultado.datosCobro.tipoVehiculo,
+            tipoServicio: resultado.datosCobro.tipoServicio,
+            entrada: resultado.datosCobro.entrada,
+            salida: resultado.datosCobro.salida,
+            cobro: resultado.datosCobro.cobro,
+            nombre: clienteData ? clienteData.nombre : document.getElementById('nombreVal').textContent,
+            cedula: clienteData ? clienteData.cedula : document.getElementById('cedulaVal').textContent,
+            telefono: clienteData ? clienteData.telefono : document.getElementById('telefonoVal').textContent
+          };
 
-        // Orden de impresión directa:
-        // Si no hay impresora conectada, salta el mensaje:
-        // "Impresora no conectada: No hay impresora conectada para emitir el comprobante físico."
-        if (window.PrinterService) {
-          await window.PrinterService.imprimirTicketCobro(datosTicket);
-        }
+          // Orden de impresión directa:
+          if (window.PrinterService) {
+            await window.PrinterService.imprimirTicketCobro(datosTicket);
+          }
 
-        // Mostrar el diseño visual del ticket de cobro (Réplica exacta de Comprobante de Cobro)
-        if (window.TicketsUI) {
-          window.TicketsUI.mostrarTicketCobro(datosTicket, (d) => {
-            if (window.PrinterService) window.PrinterService.imprimirTicketCobro(d);
-          });
+          // Mostrar el diseño visual del ticket de cobro
+          if (window.TicketsUI) {
+            window.TicketsUI.mostrarTicketCobro(datosTicket, (d) => {
+              if (window.PrinterService) window.PrinterService.imprimirTicketCobro(d);
+            });
+          }
         }
 
         // Limpiamos la pantalla para el próximo cliente

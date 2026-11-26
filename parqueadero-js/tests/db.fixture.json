@@ -1,0 +1,74 @@
+{
+    "usuarios": [
+        {
+            "usuario": "cajero_test",
+            "password": "d5b30750afab721bb4e1c45abbd503a65bf2200f28ee5cd94ca9de8742e074ea",
+            "rol": "cajero",
+            "nombre": "Cajero de Pruebas"
+        },
+        {
+            "usuario": "admin_test",
+            "password": "6b4922104ecde5693695c0ebc23c7a37924fa9f4a496530da87414c8dd93e1a9",
+            "rol": "administrador",
+            "nombre": "Administrador de Pruebas"
+        }
+    ],
+    "tarifas": {
+        "CARRO": {
+            "fraccion": 3000,
+            "dia": 15000,
+            "media_mensualidad": 70000,
+            "mensualidad": 120000,
+            "media": 70000
+        },
+        "MOTO": {
+            "fraccion": 1500,
+            "dia": 8000,
+            "media_mensualidad": 35000,
+            "mensualidad": 60000,
+            "media": 35000
+        },
+        "carro": {
+            "fraccion": 3000,
+            "dia": 15000,
+            "media_mensualidad": 70000,
+            "mensualidad": 120000,
+            "media": 70000
+        },
+        "moto": {
+            "fraccion": 1500,
+            "dia": 8000,
+            "media_mensualidad": 35000,
+            "mensualidad": 60000,
+            "media": 35000
+        }
+    },
+    "registros": [],
+    "clientes": [
+        {
+            "cedula": "1000000001",
+            "nombre": "Cliente Frecuente Mensual",
+            "telefono": "3000000001",
+            "placa": "JKL222",
+            "servicio": "mensualidad",
+            "tipoSuscripcion": "Mensualidad",
+            "estado": "Activo",
+            "fechaInicio": "2026-11-19T20:08:47.522Z",
+            "fechaVencimiento": "2026-12-19T20:08:47.523Z"
+        },
+        {
+            "cedula": "1000000002",
+            "nombre": "Cliente Media Mensualidad",
+            "telefono": "3000000002",
+            "placa": "MNO333",
+            "servicio": "media_mensualidad",
+            "tipoSuscripcion": "Media Mensualidad",
+            "estado": "Activo",
+            "fechaInicio": "2026-11-22T20:08:47.523Z",
+            "fechaVencimiento": "2026-12-22T20:08:47.523Z"
+        }
+    ],
+    "config": {
+        "passwordAdmin": "Adm@2026test"
+    }
+}
